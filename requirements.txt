@@ -4,4 +4,4 @@ pillow
 pandas
 xgboost
 tensorflow
-copencv-python-headless
+opencv-python-headless
