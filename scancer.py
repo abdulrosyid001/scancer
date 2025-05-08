@@ -52,7 +52,7 @@ location_translation = {
     "Torso": "trunk",
     "Ekstrimitas Atas": "upper extremity",
     "Perut": "abdomen",
-    "wajah": "face",
+    "Wajah": "face",
     "Dada": "chest",
     "Kaki": "foot",
     "Tidak Diketahui": "unknown",
@@ -128,7 +128,7 @@ with st.form(key="patient_form"):
     age = st.number_input("Usia", min_value=0, max_value=100, step=1)
     location = st.selectbox(
         "Lokasi Kanker Kulit",
-        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
+        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
     submit_button = st.form_submit_button(label="Kirim")
 
