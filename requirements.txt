@@ -3,3 +3,5 @@ numpy
 pillow
 pandas
 xgboost
+tensorflow
+cv2
