@@ -2,7 +2,6 @@ import streamlit as st
 import cv2
 import numpy as np
 from PIL import Image
-import io
 import xgboost as xgb
 import pandas as pd
 import tensorflow as tf
