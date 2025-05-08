@@ -13,7 +13,7 @@ from tensorflow.keras.preprocessing import image
 st.set_page_config(page_title="Skin Cancer Data Input", layout="wide")
 
 # Title
-st.title("Skin Cancer Data Collection and Prediction")
+st.title("Scancer: Deteksi Kanker Kulit")
 
 # Load the XGBoost model from JSON
 try:
