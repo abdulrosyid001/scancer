@@ -18,7 +18,7 @@ st.title("Skin Cancer Data Collection and Prediction")
 # Load the XGBoost model from JSON
 try:
     model = xgb.Booster()
-    model.load_model("model_xgboost_81%.json")
+    model.load_model("model_xgboost_81.json")
 except FileNotFoundError:
     st.error("XGBoost model file 'model_xgboost_81.json' not found. Please ensure the file is in the correct directory.")
     model = None
