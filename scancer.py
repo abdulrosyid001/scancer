@@ -8,6 +8,7 @@ import tensorflow as tf
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing import image
+from sklearn.ensemble import IsolationForest
 
 # Set page configuration
 st.set_page_config(page_title="Skin Cancer Data Input", layout="wide")
@@ -89,6 +90,24 @@ except Exception as e:
     st.error(f"Error loading MobileNetV2: {str(e)}")
     base_model = None
 
+# Initialize Isolation Forest
+iso_forest = IsolationForest(
+    contamination=0.1,  # Adjust based on expected anomaly proportion
+    random_state=42,
+    n_estimators=100
+)
+
+# Placeholder for training Isolation Forest (assuming training data is available)
+# Note: In practice, you need to train iso_forest on your dataset
+# For this example, we'll assume it's pre-trained or train it on input data if available
+# If you have a training dataset, uncomment and adapt the following:
+"""
+training_data = pd.read_csv("your_training_data.csv")  # Load your training data
+feature_names = [f"{i}" for i in range(1280)] + ["age", "sex", "localization"]
+X_train = training_data[feature_names]
+iso_forest.fit(X_train)
+"""
+
 # Function to extract features from an image
 def extract_image_features(img, model):
     # Convert PIL Image to numpy array
@@ -166,15 +185,23 @@ if submit_button:
             combined_features = np.concatenate([image_features, [age, encoded_gender, encoded_location]])
             input_data = pd.DataFrame([combined_features], columns=feature_names)
             
-            # Convert to DMatrix for XGBoost Booster
-            dmatrix = xgb.DMatrix(input_data)
+            # Check for anomaly using Isolation Forest
+            # Note: Isolation Forest should be trained on your dataset
+            # For demonstration, we assume it's trained or use input data
+            anomaly_pred = iso_forest.fit_predict(input_data)
             
-            # Make prediction
-            prediction = model.predict(dmatrix)[0]
-            # For multiclass, prediction is the class index
-            result = class_mapping[int(prediction)]  # Map class index to class name
-            st.subheader("Hasil Prediksi")
-            st.write(f"Prediksi Tipe Kanker Kulit: **{result}**")
+            if anomaly_pred[0] == -1:  # Data is an anomaly
+                st.error("Gambar yang Anda masukkan bukan gambar kanker kulit.")
+            else:  # Data is not an anomaly, proceed to XGBoost
+                # Convert to DMatrix for XGBoost Booster
+                dmatrix = xgb.DMatrix(input_data)
+                
+                # Make prediction
+                prediction = model.predict(dmatrix)[0]
+                # For multiclass, prediction is the class index
+                result = class_mapping[int(prediction)]  # Map class index to class name
+                st.subheader("Hasil Prediksi")
+                st.write(f"Prediksi Tipe Kanker Kulit: **{result}**")
         except Exception as e:
             st.error(f"Error: {str(e)}")
     elif model is None or base_model is None:
