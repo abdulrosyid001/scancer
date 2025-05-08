@@ -109,6 +109,17 @@ def extract_image_features(img, model):
     features = model.predict(img_array, verbose=0)
     return features.flatten()
 
+# Data Input Section
+st.header("Informasi Pasien")
+with st.form(key="patient_form"):
+    gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
+    age = st.number_input("Usia", min_value=0, max_value=100, step=1)
+    location = st.selectbox(
+        "Lokasi Kanker Kulit",
+        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
+    )
+    submit_button = st.form_submit_button(label="Kirim")
+
 # Image Input Section
 st.header("Input Gambar")
 image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
@@ -124,17 +135,6 @@ else:  # Capture from Camera
     if picture is not None:
         selected_image = Image.open(picture)
         st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
-
-# Data Input Section
-st.header("Informasi Pasien")
-with st.form(key="patient_form"):
-    gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
-    age = st.number_input("Usia", min_value=0, max_value=100, step=1)
-    location = st.selectbox(
-        "Lokasi Kanker Kulit",
-        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
-    )
-    submit_button = st.form_submit_button(label="Kirim")
 
 # Form submission handling
 if submit_button:
