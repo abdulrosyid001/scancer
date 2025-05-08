@@ -101,12 +101,6 @@ iso_forest = IsolationForest(
 # Note: In practice, you need to train iso_forest on your dataset
 # For this example, we'll assume it's pre-trained or train it on input data if available
 # If you have a training dataset, uncomment and adapt the following:
-"""
-training_data = pd.read_csv("your_training_data.csv")  # Load your training data
-feature_names = [f"{i}" for i in range(1280)] + ["age", "sex", "localization"]
-X_train = training_data[feature_names]
-iso_forest.fit(X_train)
-"""
 
 # Function to extract features from an image
 def extract_image_features(img, model):
