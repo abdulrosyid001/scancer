@@ -9,6 +9,7 @@ from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing import image
 from sklearn.ensemble import IsolationForest
+import joblib
 
 # Set page configuration
 st.set_page_config(page_title="Skin Cancer Data Input", layout="wide")
@@ -26,6 +27,16 @@ except FileNotFoundError:
 except Exception as e:
     st.error(f"Error loading XGBoost model: {str(e)}")
     model = None
+
+# Load the pre-trained Isolation Forest model
+try:
+    iso_forest = joblib.load("iso_forest_model.pkl")
+except FileNotFoundError:
+    st.error("Isolation Forest model file 'iso_forest_model.pkl' not found. Please ensure the file is in the correct directory.")
+    iso_forest = None
+except Exception as e:
+    st.error(f"Error loading Isolation Forest model: {str(e)}")
+    iso_forest = None
 
 # Manual mapping for gender
 gender_mapping = {
@@ -90,18 +101,6 @@ except Exception as e:
     st.error(f"Error loading MobileNetV2: {str(e)}")
     base_model = None
 
-# Initialize Isolation Forest
-iso_forest = IsolationForest(
-    contamination=0.1,  # Adjust based on expected anomaly proportion
-    random_state=42,
-    n_estimators=100
-)
-
-# Placeholder for training Isolation Forest (assuming training data is available)
-# Note: In practice, you need to train iso_forest on your dataset
-# For this example, we'll assume it's pre-trained or train it on input data if available
-# If you have a training dataset, uncomment and adapt the following:
-
 # Function to extract features from an image
 def extract_image_features(img, model):
     # Convert PIL Image to numpy array
@@ -162,8 +161,8 @@ if submit_button:
     else:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
-    # Proceed with prediction if model and image are available
-    if model is not None and base_model is not None and selected_image is not None:
+    # Proceed with prediction if all models and image are available
+    if model is not None and base_model is not None and iso_forest is not None and selected_image is not None:
         try:
             # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
@@ -179,10 +178,8 @@ if submit_button:
             combined_features = np.concatenate([image_features, [age, encoded_gender, encoded_location]])
             input_data = pd.DataFrame([combined_features], columns=feature_names)
             
-            # Check for anomaly using Isolation Forest
-            # Note: Isolation Forest should be trained on your dataset
-            # For demonstration, we assume it's trained or use input data
-            anomaly_pred = iso_forest.fit_predict(input_data)
+            # Check for anomaly using pre-trained Isolation Forest
+            anomaly_pred = iso_forest.predict(input_data)
             
             if anomaly_pred[0] == -1:  # Data is an anomaly
                 st.error("Gambar yang Anda masukkan bukan gambar kanker kulit.")
@@ -198,5 +195,5 @@ if submit_button:
                 st.write(f"Prediksi Tipe Kanker Kulit: **{result}**")
         except Exception as e:
             st.error(f"Error: {str(e)}")
-    elif model is None or base_model is None:
-        st.error("Cannot make prediction due to missing model(s).")
+    else:
+        st.error("Cannot make prediction due to missing model(s) or image.")
