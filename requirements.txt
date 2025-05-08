@@ -5,3 +5,4 @@ pandas
 xgboost
 tensorflow
 opencv-python-headless
+scikit-learn
