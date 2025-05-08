@@ -30,7 +30,7 @@ except Exception as e:
 
 # Load the pre-trained Isolation Forest model
 try:
-    iso_forest = joblib.load("iso_forest_model.pkl")
+    iso_forest = joblib.load("model_isolation_forest.pkl")
 except FileNotFoundError:
     st.error("Isolation Forest model file 'iso_forest_model.pkl' not found. Please ensure the file is in the correct directory.")
     iso_forest = None
