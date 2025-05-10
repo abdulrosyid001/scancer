@@ -5,12 +5,11 @@ from PIL import Image
 import xgboost as xgb
 import pandas as pd
 import tensorflow as tf
-from tensorflow.keras.models import load_model
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from sklearn.preprocessing import StandardScaler
 import joblib
-from sklearn.ensemble import IsolationForest  # Tambahkan impor untuk Isolation Forest
+from sklearn.ensemble import IsolationForest  # Impor Isolation Forest
 
 # Set page configuration
 st.set_page_config(page_title="Skin Cancer Data Input", layout="wide")
@@ -31,10 +30,10 @@ except Exception as e:
 
 # Load the Isolation Forest model and scaler
 try:
-    isolation_forest = joblib.load("isolation_forest.joblib")  # Ganti dengan nama file Isolation Forest Anda
+    isolation_forest = joblib.load("model_isolation_forest.pkl")  # Ubah ke .pkl
     scaler = joblib.load("scaler.joblib")
 except FileNotFoundError:
-    st.error("Isolation Forest model or scaler file not found. Please ensure 'isolation_forest.joblib' and 'scaler.joblib' are in the correct directory.")
+    st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
     isolation_forest, scaler = None, None
 except Exception as e:
     st.error(f"Error loading Isolation Forest model or scaler: {str(e)}")
@@ -98,7 +97,7 @@ class_mapping = {
 
 # Load MobileNetV2 for feature extraction
 try:
-    base_model = MobileNetV2(weights="imagenet", include_top=False, pooling="avg", input_shape=(224, 224, 3))  # Tentukan input_shape
+    base_model = MobileNetV2(weights="imagenet", include_top=False, pooling="avg", input_shape=(224, 224, 3))
 except Exception as e:
     st.error(f"Error loading MobileNetV2: {str(e)}")
     base_model = None
@@ -125,11 +124,11 @@ def extract_image_features(img, model):
 # Function to detect anomalies using Isolation Forest
 def detect_anomalies(isolation_forest, data, scaler):
     data_scaled = scaler.transform(data)
+    # Prediksi anomali: -1 untuk anomali, 1 untuk normal
     predictions = isolation_forest.predict(data_scaled)
-    # Isolation Forest returns 1 for inliers (normal) and -1 for outliers (anomaly)
     anomalies = predictions == -1
-    # Optionally calculate anomaly scores
-    scores = isolation_forest.score_samples(data_scaled)  # Negative scores, lower means more anomalous
+    # Skor anomali: semakin rendah (lebih negatif), semakin anomali
+    scores = isolation_forest.score_samples(data_scaled)
     return scores, anomalies
 
 # Data Input Section
@@ -141,7 +140,6 @@ with st.form(key="patient_form"):
         "Lokasi Kanker Kulit",
         ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
-    threshold = st.slider("Threshold untuk deteksi anomali:", 0.01, 1.0, 0.1)  # Threshold mungkin tidak diperlukan untuk Isolation Forest
     submit_button = st.form_submit_button(label="Kirim")
 
 # Image Input Section
@@ -150,7 +148,7 @@ image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "A
 
 selected_image = None
 if image_input_method == "Unggah Gambar":
-    uploaded_file = st.fileUploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
         selected_image = Image.open(uploaded_file)
         st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
