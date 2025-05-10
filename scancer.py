@@ -30,8 +30,7 @@ except Exception as e:
 
 # Load the Isolation Forest model and scaler
 try:
-    isolation_forest = joblib.load("model_isolation_forest.pkl")  # Ubah ke .pkl
-    scaler = joblib.load("scaler.joblib")
+    isolation_forest = joblib.load("model_isolation_forest.pkl")
 except FileNotFoundError:
     st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
     isolation_forest, scaler = None, None
