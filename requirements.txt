@@ -6,3 +6,4 @@ xgboost
 tensorflow
 opencv-python-headless
 scikit-learn
+keras==2.14.0
