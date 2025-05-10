@@ -31,6 +31,7 @@ except Exception as e:
 # Load the Isolation Forest model and scaler
 try:
     isolation_forest = joblib.load("model_isolation_forest.pkl")
+    scaler = joblib.load("scaler.joblib")
 except FileNotFoundError:
     st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
     isolation_forest = None
@@ -53,9 +54,7 @@ location_translation = {
     "Ekstrimitas Bawah": "lower extremity",
     "Torso": "trunk",
     "Ekstrimitas Atas": "upper extremity",
-    "Perut": "abd
-
-omen",
+    "Perut": "abdomen",
     "Wajah": "face",
     "Dada": "chest",
     "Kaki": "foot",
