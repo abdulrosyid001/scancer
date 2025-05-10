@@ -5,10 +5,10 @@ from PIL import Image
 import xgboost as xgb
 import pandas as pd
 import tensorflow as tf
+from tensorflow.keras.models import load_model
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
-from tensorflow.keras.preprocessing import image
-from sklearn.ensemble import IsolationForest
+from sklearn.preprocessing import StandardScaler
 import joblib
 
 # Set page configuration
@@ -28,15 +28,16 @@ except Exception as e:
     st.error(f"Error loading XGBoost model: {str(e)}")
     model = None
 
-# Load the pre-trained Isolation Forest model
+# Load the Autoencoder model and scaler
 try:
-    iso_forest = joblib.load("model_isolation_forest.pkl")
+    autoencoder = load_model("autoencoder_model.h5")
+    scaler = joblib.load("scaler.joblib")
 except FileNotFoundError:
-    st.error("Isolation Forest model file 'iso_forest_model.pkl' not found. Please ensure the file is in the correct directory.")
-    iso_forest = None
+    st.error("Autoencoder model or scaler file not found. Please ensure 'autoencoder_model.h5' and 'scaler.joblib' are in the correct directory.")
+    autoencoder, scaler = None, None
 except Exception as e:
-    st.error(f"Error loading Isolation Forest model: {str(e)}")
-    iso_forest = None
+    st.error(f"Error loading Autoencoder model or scaler: {str(e)}")
+    autoencoder, scaler = None, None
 
 # Manual mapping for gender
 gender_mapping = {
@@ -103,7 +104,6 @@ except Exception as e:
 
 # Function to extract features from an image
 def extract_image_features(img, model):
-    # Convert PIL Image to numpy array
     img = img.resize((224, 224))  # Resize to 224x224
     img_array = np.array(img)
     
@@ -113,13 +113,21 @@ def extract_image_features(img, model):
     elif img_array.shape[2] == 4:  # RGBA
         img_array = img_array[:, :, :3]
     
-    # Preprocess image
+    # opted for simpler preprocessing for this version
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
     img_array = preprocess_input(img_array)
     
     # Extract features
     features = model.predict(img_array, verbose=0)
     return features.flatten()
+
+# Function to detect anomalies using Autoencoder
+def detect_anomalies(autoencoder, data, scaler, threshold):
+    data_scaled = scaler.transform(data)
+    reconstructions = autoencoder.predict(data_scaled, verbose=0)
+    mse = np.mean(np.power(data_scaled - reconstructions, 2), axis=1)
+    anomalies = mse > threshold
+    return mse, anomalies
 
 # Data Input Section
 st.header("Informasi Pasien")
@@ -130,6 +138,7 @@ with st.form(key="patient_form"):
         "Lokasi Kanker Kulit",
         ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
+    threshold = st.slider("Threshold untuk deteksi anomali:", 0.01, 1.0, 0.1)
     submit_button = st.form_submit_button(label="Kirim")
 
 # Image Input Section
@@ -162,11 +171,10 @@ if submit_button:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
     # Proceed with prediction if all models and image are available
-    if model is not None and base_model is not None and iso_forest is not None and selected_image is not None:
+    if model is not None and base_model is not None and autoencoder is not None and scaler is not None and selected_image is not None:
         try:
             # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
-            # Translate location to English and encode
             location_english = location_translation[location]
             encoded_location = location_mapping[location_english]
             
@@ -178,18 +186,18 @@ if submit_button:
             combined_features = np.concatenate([image_features, [age, encoded_gender, encoded_location]])
             input_data = pd.DataFrame([combined_features], columns=feature_names)
             
-            # Check for anomaly using pre-trained Isolation Forest
-            anomaly_pred = iso_forest.predict(input_data)
+            # Check for anomaly using Autoencoder
+            mse, anomalies = detect_anomalies(autoencoder, input_data, scaler, threshold)
             
-            if anomaly_pred[0] == -1:  # Data is an anomaly
-                st.error("Gambar yang Anda masukkan bukan gambar kanker kulit.")
+            if anomalies[0]:  # Data is an anomaly
+                st.error(f"Gambar yang Anda masukkan bukan gambar kanker kulit (Reconstruction Error: {mse[0]:.4f}).")
             else:  # Data is not an anomaly, proceed to XGBoost
+                st.write(f"Reconstruction Error: {mse[0]:.4f} (Data dianggap normal)")
                 # Convert to DMatrix for XGBoost Booster
                 dmatrix = xgb.DMatrix(input_data)
                 
                 # Make prediction
                 prediction = model.predict(dmatrix)[0]
-                # For multiclass, prediction is the class index
                 result = class_mapping[int(prediction)]  # Map class index to class name
                 st.subheader("Hasil Prediksi")
                 st.write(f"Prediksi Tipe Kanker Kulit: **{result}**")
