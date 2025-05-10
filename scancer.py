@@ -12,7 +12,7 @@ import joblib
 from sklearn.ensemble import IsolationForest  # Impor Isolation Forest
 
 # Set page configuration
-st.set_page_config(page_title="Skin Cancer Data Input", layout="wide")
+st.set_page_config(page_title="Scancer", layout="wide")
 
 # Title
 st.title("Scancer: Deteksi Kanker Kulit")
