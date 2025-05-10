@@ -10,6 +10,7 @@ from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from sklearn.preprocessing import StandardScaler
 import joblib
+from sklearn.ensemble import IsolationForest  # Tambahkan impor untuk Isolation Forest
 
 # Set page configuration
 st.set_page_config(page_title="Skin Cancer Data Input", layout="wide")
@@ -28,16 +29,16 @@ except Exception as e:
     st.error(f"Error loading XGBoost model: {str(e)}")
     model = None
 
-# Load the Autoencoder model and scaler
+# Load the Isolation Forest model and scaler
 try:
-    autoencoder = load_model("autoencoder_model.h5")
+    isolation_forest = joblib.load("isolation_forest.joblib")  # Ganti dengan nama file Isolation Forest Anda
     scaler = joblib.load("scaler.joblib")
 except FileNotFoundError:
-    st.error("Autoencoder model or scaler file not found. Please ensure 'autoencoder_model.h5' and 'scaler.joblib' are in the correct directory.")
-    autoencoder, scaler = None, None
+    st.error("Isolation Forest model or scaler file not found. Please ensure 'isolation_forest.joblib' and 'scaler.joblib' are in the correct directory.")
+    isolation_forest, scaler = None, None
 except Exception as e:
-    st.error(f"Error loading Autoencoder model or scaler: {str(e)}")
-    autoencoder, scaler = None, None
+    st.error(f"Error loading Isolation Forest model or scaler: {str(e)}")
+    isolation_forest, scaler = None, None
 
 # Manual mapping for gender
 gender_mapping = {
@@ -97,7 +98,7 @@ class_mapping = {
 
 # Load MobileNetV2 for feature extraction
 try:
-    base_model = MobileNetV2(weights="imagenet", include_top=False, pooling="avg")
+    base_model = MobileNetV2(weights="imagenet", include_top=False, pooling="avg", input_shape=(224, 224, 3))  # Tentukan input_shape
 except Exception as e:
     st.error(f"Error loading MobileNetV2: {str(e)}")
     base_model = None
@@ -113,7 +114,7 @@ def extract_image_features(img, model):
     elif img_array.shape[2] == 4:  # RGBA
         img_array = img_array[:, :, :3]
     
-    # opted for simpler preprocessing for this version
+    # Preprocessing
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
     img_array = preprocess_input(img_array)
     
@@ -121,13 +122,15 @@ def extract_image_features(img, model):
     features = model.predict(img_array, verbose=0)
     return features.flatten()
 
-# Function to detect anomalies using Autoencoder
-def detect_anomalies(autoencoder, data, scaler, threshold):
+# Function to detect anomalies using Isolation Forest
+def detect_anomalies(isolation_forest, data, scaler):
     data_scaled = scaler.transform(data)
-    reconstructions = autoencoder.predict(data_scaled, verbose=0)
-    mse = np.mean(np.power(data_scaled - reconstructions, 2), axis=1)
-    anomalies = mse > threshold
-    return mse, anomalies
+    predictions = isolation_forest.predict(data_scaled)
+    # Isolation Forest returns 1 for inliers (normal) and -1 for outliers (anomaly)
+    anomalies = predictions == -1
+    # Optionally calculate anomaly scores
+    scores = isolation_forest.score_samples(data_scaled)  # Negative scores, lower means more anomalous
+    return scores, anomalies
 
 # Data Input Section
 st.header("Informasi Pasien")
@@ -138,7 +141,7 @@ with st.form(key="patient_form"):
         "Lokasi Kanker Kulit",
         ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
-    threshold = st.slider("Threshold untuk deteksi anomali:", 0.01, 1.0, 0.1)
+    threshold = st.slider("Threshold untuk deteksi anomali:", 0.01, 1.0, 0.1)  # Threshold mungkin tidak diperlukan untuk Isolation Forest
     submit_button = st.form_submit_button(label="Kirim")
 
 # Image Input Section
@@ -147,7 +150,7 @@ image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "A
 
 selected_image = None
 if image_input_method == "Unggah Gambar":
-    uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.fileUploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
         selected_image = Image.open(uploaded_file)
         st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
@@ -171,7 +174,7 @@ if submit_button:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
     # Proceed with prediction if all models and image are available
-    if model is not None and base_model is not None and autoencoder is not None and scaler is not None and selected_image is not None:
+    if model is not None and base_model is not None and isolation_forest is not None and scaler is not None and selected_image is not None:
         try:
             # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
@@ -186,13 +189,13 @@ if submit_button:
             combined_features = np.concatenate([image_features, [age, encoded_gender, encoded_location]])
             input_data = pd.DataFrame([combined_features], columns=feature_names)
             
-            # Check for anomaly using Autoencoder
-            mse, anomalies = detect_anomalies(autoencoder, input_data, scaler, threshold)
+            # Check for anomaly using Isolation Forest
+            scores, anomalies = detect_anomalies(isolation_forest, input_data, scaler)
             
             if anomalies[0]:  # Data is an anomaly
-                st.error(f"Gambar yang Anda masukkan bukan gambar kanker kulit (Reconstruction Error: {mse[0]:.4f}).")
+                st.error(f"Gambar yang Anda masukkan bukan gambar kanker kulit (Anomaly Score: {-scores[0]:.4f}).")
             else:  # Data is not an anomaly, proceed to XGBoost
-                st.write(f"Reconstruction Error: {mse[0]:.4f} (Data dianggap normal)")
+                st.write(f"Anomaly Score: {-scores[0]:.4f} (Data dianggap normal)")
                 # Convert to DMatrix for XGBoost Booster
                 dmatrix = xgb.DMatrix(input_data)
                 
