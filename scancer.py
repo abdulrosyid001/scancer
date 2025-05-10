@@ -33,10 +33,12 @@ try:
     isolation_forest = joblib.load("model_isolation_forest.pkl")
 except FileNotFoundError:
     st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
-    isolation_forest, scaler = None, None
+    isolation_forest = None
+    scaler = None
 except Exception as e:
     st.error(f"Error loading Isolation Forest model or scaler: {str(e)}")
-    isolation_forest, scaler = None, None
+    isolation_forest = None
+    scaler = None
 
 # Manual mapping for gender
 gender_mapping = {
@@ -51,7 +53,9 @@ location_translation = {
     "Ekstrimitas Bawah": "lower extremity",
     "Torso": "trunk",
     "Ekstrimitas Atas": "upper extremity",
-    "Perut": "abdomen",
+    "Perut": "abd
+
+omen",
     "Wajah": "face",
     "Dada": "chest",
     "Kaki": "foot",
@@ -139,7 +143,6 @@ with st.form(key="patient_form"):
         "Lokasi Kanker Kulit",
         ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
-    submit_button = st.form_submit_button(label="Kirim")
 
 # Image Input Section
 st.header("Input Gambar")
@@ -156,6 +159,9 @@ else:  # Capture from Camera
     if picture is not None:
         selected_image = Image.open(picture)
         st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+
+# Submit Button (Moved below Image Input)
+submit_button = st.form_submit_button(label="Kirim", form_key="patient_form")
 
 # Form submission handling
 if submit_button:
