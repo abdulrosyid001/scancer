@@ -31,7 +31,6 @@ except Exception as e:
 # Load the Isolation Forest model and scaler
 try:
     isolation_forest = joblib.load("model_isolation_forest.pkl")
-    scaler = joblib.load("scaler.joblib")
 except FileNotFoundError:
     st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
     isolation_forest = None
@@ -159,7 +158,9 @@ else:  # Capture from Camera
         selected_image = Image.open(picture)
         st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
 
-# Submit Button (Moved below Image Input)
+# Add visual separator for clarity
+st.markdown("---")
+st.subheader("Kirim Data")
 submit_button = st.form_submit_button(label="Kirim", form_key="patient_form")
 
 # Form submission handling
