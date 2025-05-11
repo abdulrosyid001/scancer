@@ -70,11 +70,9 @@ try:
 except FileNotFoundError:
     st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
     isolation_forest = None
-    scaler = None
 except Exception as e:
     st.error(f"Error loading Isolation Forest model or scaler: {str(e)}")
     isolation_forest = None
-    scaler = None
 
 # Manual mapping for gender
 gender_mapping = {
@@ -241,7 +239,7 @@ if submit_button:
             input_data = pd.DataFrame([combined_features], columns=feature_names)
             
             # Check for anomaly using Isolation Forest
-            scores, anomalies = detect_anomalies(isolation_forest, input_data, scaler)
+            scores, anomalies = detect_anomalies(isolation_forest, input_data)
             
             if anomalies[0]:  # Data is an anomaly
                 st.error(f"Gambar yang Anda masukkan bukan gambar kanker kulit (Anomaly Score: {-scores[0]:.4f}).")
