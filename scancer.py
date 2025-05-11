@@ -11,6 +11,27 @@ from sklearn.preprocessing import StandardScaler
 import joblib
 from sklearn.ensemble import IsolationForest  # Impor Isolation Forest
 
+# CSS untuk mengatur teks subheader di tengah dan tombol kirim
+css = """
+<style>
+.centered-subheader {
+    text-align: center;
+}
+.full-width-button {
+    display: flex;
+    justify-content: center;
+}
+.full-width-button .stButton>button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+</style>
+"""
+
+# Menyisipkan CSS di aplikasi
+st.markdown(css, unsafe_allow_html=True)
+
 # Set page configuration
 st.set_page_config(page_title="Scancer", layout="wide")
 
@@ -131,14 +152,14 @@ def detect_anomalies(isolation_forest, data, scaler):
     # Skor anomali: semakin rendah (lebih negatif), semakin anomali
     scores = isolation_forest.score_samples(data_scaled)
     return scores, anomalies
-    
+
 # Data Input Section
 st.header("Informasi Pasien dan Input Gambar")
 
 # Satu formulir yang mencakup semua elemen
 with st.form(key="patient_form"):
     # Bagian Identitas Pasien
-    st.subheader("Identitas Pasien")
+    st.markdown('<h3 class="centered-subheader">Identitas Pasien</h3>', unsafe_allow_html=True)
     gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
     age = st.number_input("Usia", min_value=0, max_value=100, step=1)
     location = st.selectbox(
@@ -152,7 +173,7 @@ with st.form(key="patient_form"):
     st.markdown("---")
 
     # Bagian Input Gambar
-    st.subheader("Input Gambar")
+    st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
     image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
 
     selected_image = None
@@ -171,8 +192,10 @@ with st.form(key="patient_form"):
     st.markdown("---")
 
     # Tombol Kirim
-    st.subheader("Kirim Data")
+    st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
     submit_button = st.form_submit_button(label="Kirim")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Logika setelah submit
 if submit_button:
