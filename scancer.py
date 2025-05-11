@@ -215,16 +215,33 @@ with st.form(key="patient_form"):
     # Bagian Identitas Pasien
     st.markdown('<h3 class="centered-subheader">Identitas Pasien</h3>', unsafe_allow_html=True)
     gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
-    age = st.number_input("Usia", min_value=0, max_value=100, step=1)
+    age = st.number_input("Usia (dalam tahun)", min_value=0, max_value=100, step=1)
+    # Bagian Lokasi Kanker Kulit dengan keterangan
+    st.markdown('<h3 class="centered-subheader">Lokasi Kanker Kulit</h3>', unsafe_allow_html=True)
+    st.info("""
+    Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
+    - **Punggung**: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
+    - **Ekstrimitas Bawah**: Termasuk kaki dan paha, rentan jika sering terpapar matahari tanpa perlindungan.
+    - **Torso**: Bagian tengah tubuh, termasuk perut dan sisi, bisa terkena kanker akibat paparan UV.
+    - **Ekstrimitas Atas**: Termasuk lengan dan bahu, sering terkena sinar matahari langsung.
+    - **Perut**: Area yang kurang terpapar tapi bisa terkena jika tidak dilindungi.
+    - **Wajah**: Salah satu area paling rentan karena sering terpapar sinar matahari.
+    - **Dada**: Rentan terutama pada pria karena paparan sinar matahari tanpa perlindungan.
+    - **Kaki**: Termasuk telapak kaki, bisa terkena jika sering berjalan tanpa alas kaki di luar.
+    - **Tidak Diketahui**: Pilih jika lokasi tidak dapat ditentukan dengan pasti.
+    - **Leher**: Area yang sering terpapar sinar matahari, meningkatkan risiko kanker.
+    - **Kulit Kepala**: Rentan terutama pada orang botak karena paparan langsung sinar matahari.
+    - **Tangan**: Termasuk jari, sering terkena paparan lingkungan dan sinar matahari.
+    - **Telinga**: Area kecil tapi sangat rentan terhadap kanker kulit akibat sinar UV.
+    - **Alat Kelamin**: Jarang, tetapi perlu diperiksa jika ada perubahan kulit.
+    - **Ujung Jari Kaki dan Tangan**: Area akral, bisa terkena jika ada trauma atau paparan kimia.
+    """)
     location = st.selectbox(
         "Lokasi Kanker Kulit",
         ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", 
          "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", 
          "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
-
-    # Pemisah visual
-    st.markdown("---")
 
     # Bagian Input Gambar
     st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
