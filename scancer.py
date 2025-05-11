@@ -197,18 +197,6 @@ with st.form(key="patient_form"):
     submit_button = st.form_submit_button(label="Kirim")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Logika setelah submit
-if submit_button:
-    st.write("**Data yang dikirim:**")
-    st.write(f"Jenis Kelamin: {gender}")
-    st.write(f"Usia: {age}")
-    st.write(f"Lokasi: {location}")
-    if selected_image is not None:
-        st.write("Gambar berhasil diunggah atau diambil!")
-        st.image(selected_image, caption="Gambar yang Diproses", use_column_width=True)
-    else:
-        st.write("Tidak ada gambar yang diunggah atau diambil.")
-
 # Form submission handling
 if submit_button:
     st.success("Data berhasil dikirim")
