@@ -131,37 +131,60 @@ def detect_anomalies(isolation_forest, data, scaler):
     # Skor anomali: semakin rendah (lebih negatif), semakin anomali
     scores = isolation_forest.score_samples(data_scaled)
     return scores, anomalies
-
+    
 # Data Input Section
-st.header("Informasi Pasien")
+st.header("Informasi Pasien dan Input Gambar")
+
+# Satu formulir yang mencakup semua elemen
 with st.form(key="patient_form"):
+    # Bagian Identitas Pasien
+    st.subheader("Identitas Pasien")
     gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
     age = st.number_input("Usia", min_value=0, max_value=100, step=1)
     location = st.selectbox(
         "Lokasi Kanker Kulit",
-        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
+        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", 
+         "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", 
+         "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
 
-# Image Input Section
-st.header("Input Gambar")
-image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
+    # Pemisah visual
+    st.markdown("---")
 
-selected_image = None
-if image_input_method == "Unggah Gambar":
-    uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        selected_image = Image.open(uploaded_file)
-        st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
-else:  # Capture from Camera
-    picture = st.camera_input("Ambil Foto")
-    if picture is not None:
-        selected_image = Image.open(picture)
-        st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+    # Bagian Input Gambar
+    st.subheader("Input Gambar")
+    image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
 
-# Add visual separator for clarity
-st.markdown("---")
-st.subheader("Kirim Data")
-submit_button = st.form_submit_button(label="Kirim")
+    selected_image = None
+    if image_input_method == "Unggah Gambar":
+        uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
+        if uploaded_file is not None:
+            selected_image = Image.open(uploaded_file)
+            st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
+    else:  # Capture from Camera
+        picture = st.camera_input("Ambil Foto")
+        if picture is not None:
+            selected_image = Image.open(picture)
+            st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+
+    # Pemisah visual
+    st.markdown("---")
+
+    # Tombol Kirim
+    st.subheader("Kirim Data")
+    submit_button = st.form_submit_button(label="Kirim")
+
+# Logika setelah submit
+if submit_button:
+    st.write("**Data yang dikirim:**")
+    st.write(f"Jenis Kelamin: {gender}")
+    st.write(f"Usia: {age}")
+    st.write(f"Lokasi: {location}")
+    if selected_image is not None:
+        st.write("Gambar berhasil diunggah atau diambil!")
+        st.image(selected_image, caption="Gambar yang Diproses", use_column_width=True)
+    else:
+        st.write("Tidak ada gambar yang diunggah atau diambil.")
 
 # Form submission handling
 if submit_button:
