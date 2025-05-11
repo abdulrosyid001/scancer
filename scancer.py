@@ -274,9 +274,7 @@ if submit_button:
     st.write(f"Lokasi Kanker Kulit: {location}")
     
     # Check for image input
-    if selected_image is not None:
-        st.write("Anda berhasil mengirimkan gambar.")
-    else:
+    if selected_image is None:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
     # Proceed with prediction if all models and image are available
