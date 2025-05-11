@@ -18,13 +18,28 @@ css = """
     text-align: center;
 }
 .full-width-button {
+    width: 100%;  /* Mengisi lebar penuh halaman */
     display: flex;
-    justify-content: center;
+    justify-content: center;  /* Menjaga tombol terpusat */
+    margin: 0 auto;  /* Memastikan posisi terpusat */
 }
 .full-width-button .stButton>button {
-    width: 100%;
+    width: 100%;  /* Tombol mengisi lebar elemen induk */
+    max-width: 600px;  /* Batasi lebar maksimum agar tidak terlalu melebar */
     padding: 10px;
     font-size: 16px;
+    background-color: #1a2b3c;  /* Warna latar gelap */
+    color: white;  /* Warna teks putih */
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;  /* Memastikan padding tidak menambah lebar */
+}
+/* Mengatur lebar formulir agar lebih lebar dan terpusat */
+.stForm {
+    width: 100%;
+    max-width: 800px;  /* Batasi lebar formulir agar tidak terlalu melebar */
+    margin: 0 auto;  /* Pusatkan formulir */
+    padding: 0 20px;
 }
 </style>
 """
