@@ -66,15 +66,12 @@ except Exception as e:
 # Load the Isolation Forest model and scaler
 try:
     isolation_forest = joblib.load("model_isolation_forest.pkl")
-    scaler = joblib.load("scaler.joblib")  # Pastikan scaler juga dimuat
 except FileNotFoundError:
     st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
     isolation_forest = None
-    scaler = None
 except Exception as e:
     st.error(f"Error loading Isolation Forest model or scaler: {str(e)}")
     isolation_forest = None
-    scaler = None
 
 # Manual mapping for gender
 gender_mapping = {
@@ -202,13 +199,12 @@ def extract_image_features(img, model):
     return features.flatten()
 
 # Function to detect anomalies using Isolation Forest
-def detect_anomalies(isolation_forest, data, scaler):
-    data_scaled = scaler.transform(data)
+def detect_anomalies(isolation_forest, data):
     # Prediksi anomali: -1 untuk anomali, 1 untuk normal
-    predictions = isolation_forest.predict(data_scaled)
+    predictions = isolation_forest.predict(data)
     anomalies = predictions == -1
     # Skor anomali: semakin rendah (lebih negatif), semakin anomali
-    scores = isolation_forest.score_samples(data_scaled)
+    scores = isolation_forest.score_samples(data)
     return scores, anomalies
 
 # Data Input Section
@@ -269,7 +265,7 @@ if submit_button:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
     # Proceed with prediction if all models and image are available
-    if model is not None and base_model is not None and isolation_forest is not None and scaler is not None and selected_image is not None:
+    if model is not None and base_model is not None and isolation_forest is not None:
         try:
             # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
@@ -285,7 +281,7 @@ if submit_button:
             input_data = pd.DataFrame([combined_features], columns=feature_names)
             
             # Check for anomaly using Isolation Forest
-            scores, anomalies = detect_anomalies(isolation_forest, input_data, scaler)
+            scores, anomalies = detect_anomalies(isolation_forest, input_data)
             
             if anomalies[0]:  # Data is an anomaly
                 st.error(f"Gambar yang Anda masukkan bukan gambar kanker kulit (Anomaly Score: {-scores[0]:.4f}).")
