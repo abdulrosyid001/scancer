@@ -159,10 +159,10 @@ def extract_image_features(img, model):
 # Function to detect anomalies using Isolation Forest
 def detect_anomalies(isolation_forest, data):
     # Prediksi anomali: -1 untuk anomali, 1 untuk normal
-    predictions = isolation_forest.predict(data_scaled)
+    predictions = isolation_forest.predict(data)
     anomalies = predictions == -1
     # Skor anomali: semakin rendah (lebih negatif), semakin anomali
-    scores = isolation_forest.score_samples(data_scaled)
+    scores = isolation_forest.score_samples(data)
     return scores, anomalies
 
 # Data Input Section
