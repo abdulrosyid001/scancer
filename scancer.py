@@ -216,8 +216,6 @@ with st.form(key="patient_form"):
     st.markdown('<h3 class="centered-subheader">Identitas Pasien</h3>', unsafe_allow_html=True)
     gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
     age = st.number_input("Usia (dalam tahun)", min_value=0, max_value=100, step=1)
-    # Bagian Lokasi Kanker Kulit dengan keterangan
-    st.markdown('<h3 class="centered-subheader">Lokasi Kanker Kulit</h3>', unsafe_allow_html=True)
     st.info("""
     Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
     - **Punggung**: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
@@ -301,13 +299,11 @@ if submit_button:
             scores, anomalies = detect_anomalies(isolation_forest, input_data)
             
             if anomalies[0]:  # Data is an anomaly
-                st.error(f"Gambar yang Anda masukkan bukan gambar kanker kulit (Anomaly Score: {-scores[0]:.4f}).")
                 st.markdown("""
                 **Saran Tindakan:**  
                 Gambar yang Anda unggah mungkin bukan gambar kanker kulit. Pastikan gambar yang diunggah adalah gambar kulit yang jelas dan sesuai. Jika Anda memiliki kekhawatiran tentang kulit Anda, konsultasikan dengan dokter kulit untuk pemeriksaan langsung.
                 """)
             else:  # Data is not an anomaly, proceed to XGBoost
-                st.write(f"Anomaly Score: {-scores[0]:.4f} (Data dianggap normal)")
                 # Convert to DMatrix for XGBoost Booster
                 dmatrix = xgb.DMatrix(input_data)
                 
