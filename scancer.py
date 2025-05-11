@@ -159,8 +159,7 @@ def extract_image_features(img, model):
     return features.flatten()
 
 # Function to detect anomalies using Isolation Forest
-def detect_anomalies(isolation_forest, data, scaler):
-    data_scaled = scaler.transform(data)
+def detect_anomalies(isolation_forest, data):
     # Prediksi anomali: -1 untuk anomali, 1 untuk normal
     predictions = isolation_forest.predict(data_scaled)
     anomalies = predictions == -1
