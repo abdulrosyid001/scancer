@@ -29,11 +29,11 @@ css = """
 </style>
 """
 
-# Menyisipkan CSS di aplikasi
-st.markdown(css, unsafe_allow_html=True)
-
 # Set page configuration
 st.set_page_config(page_title="Scancer", layout="wide")
+
+# Menyisipkan CSS di aplikasi
+st.markdown(css, unsafe_allow_html=True)
 
 # Title
 st.title("Scancer: Deteksi Kanker Kulit")
