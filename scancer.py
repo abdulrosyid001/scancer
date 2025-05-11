@@ -226,7 +226,7 @@ if submit_button:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
     # Proceed with prediction if all models and image are available
-    if model is not None and base_model is not None and isolation_forest is not None and scaler is not None and selected_image is not None:
+    if model is not None and base_model is not None and isolation_forest is not None:
         try:
             # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
