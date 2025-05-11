@@ -161,7 +161,7 @@ else:  # Capture from Camera
 # Add visual separator for clarity
 st.markdown("---")
 st.subheader("Kirim Data")
-submit_button = st.form_submit_button(label="Kirim", form_key="patient_form")
+submit_button = st.form_submit_button(label="Kirim")
 
 # Form submission handling
 if submit_button:
