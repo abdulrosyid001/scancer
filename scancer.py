@@ -25,7 +25,7 @@ css = """
 }
 .full-width-button .stButton>button {
     width: 100%;  /* Tombol mengisi lebar elemen induk */
-    max-width: 600px;  /* Batasi lebar maksimum agar tidak terlalu melebar */
+    max-width: 1200px;  /* Lebar maksimum lebih besar untuk mengisi kotak besar */
     padding: 10px;
     font-size: 16px;
     background-color: #1a2b3c;  /* Warna latar gelap seperti gambar */
@@ -37,7 +37,7 @@ css = """
 /* Mengatur lebar formulir agar lebih lebar dan terpusat */
 .stForm {
     width: 100%;
-    max-width: 800px;  /* Batasi lebar formulir agar tidak terlalu melebar */
+    max-width: 1200px;  /* Lebar maksimum lebih besar untuk formulir */
     margin: 0 auto;  /* Pusatkan formulir */
     padding: 0 20px;
 }
