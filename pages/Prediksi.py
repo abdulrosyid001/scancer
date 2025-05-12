@@ -251,9 +251,6 @@ with st.form(key="patient_form"):
             selected_image = Image.open(picture)
             st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
 
-    # Pemisah visual
-    st.markdown("---")
-
     # Tombol Kirim
     st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
     st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
