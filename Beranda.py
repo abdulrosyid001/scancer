@@ -17,6 +17,8 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+st.markdown("---")
+
 # Penjelasan jenis-jenis kanker kulit
 st.header("Jenis-Jenis Kanker Kulit")
 st.markdown("""
