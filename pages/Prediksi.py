@@ -46,9 +46,6 @@ css = """
 # Menyisipkan CSS di aplikasi
 st.markdown(css, unsafe_allow_html=True)
 
-# Title
-st.title("Scancer: Deteksi Kanker Kulit")
-
 # Load the XGBoost model from JSON
 try:
     model = xgb.Booster()
