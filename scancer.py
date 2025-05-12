@@ -10,6 +10,9 @@ from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 import joblib
 from sklearn.ensemble import IsolationForest  # Impor Isolation Forest
 
+# Set page configuration
+st.set_page_config(page_title="Scancer", layout="wide")
+
 # CSS untuk mengatur teks subheader di tengah dan tombol kirim
 css = """
 <style>
@@ -42,9 +45,6 @@ css = """
 }
 </style>
 """
-
-# Set page configuration
-st.set_page_config(page_title="Scancer", layout="wide")
 
 # Menyisipkan CSS di aplikasi
 st.markdown(css, unsafe_allow_html=True)
