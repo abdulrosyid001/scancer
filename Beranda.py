@@ -26,47 +26,61 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("1. Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
-    st.write("""
-    Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
-    Jika tidak diobati, dapat berkembang menjadi intraepithelial carcinoma, yaitu kanker kulit non-invasif yang terbatas pada lapisan kulit atas.
-    """)
+    st.markdown("""
+    <div style='text-align: justify;'>
+        Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
+        Jika tidak diobati, dapat berkembang menjadi intraepithelial carcinoma, yaitu kanker kulit non-invasif yang terbatas pada lapisan kulit atas.
+    </div>
+    """, unsafe_allow_html=True)
 
     st.subheader("2. Basal Cell Carcinoma (BCC)")
-    st.write("""
-    Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
-    BCC tumbuh lambat dan jarang menyebar, tetapi dapat menyebabkan kerusakan lokal jika tidak diobati.
-    """)
+    st.markdown("""
+    <div style='text-align: justify;'>
+        Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
+        BCC tumbuh lambat dan jarang menyebar, tetapi dapat menyebabkan kerusakan lokal jika tidak diobati.
+    </div>
+    """, unsafe_allow_html=True)
 
     st.subheader("3. Benign Keratosis-like Lesions (BKL)")
-    st.write("""
-    Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
-    Meskipun tidak berbahaya, BKL dapat menyerupai kanker kulit sehingga memerlukan pemeriksaan.
-    """)
+    st.markdown("""
+    <div style='text-align: justify;'>
+        Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
+        Meskipun tidak berbahaya, BKL dapat menyerupai kanker kulit sehingga memerlukan pemeriksaan.
+    </div>
+    """, unsafe_allow_html=True)
 
     st.subheader("4. Dermatofibroma (DF)")
-    st.write("""
-    Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
-    Lesi ini tidak berbahaya tetapi dapat menyebabkan ketidaknyamanan jika teriritasi.
-    """)
+    st.markdown("""
+    <div style='text-align: justify;'>
+        Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
+        Lesi ini tidak berbahaya tetapi dapat menyebabkan ketidaknyamanan jika teriritasi.
+    </div>
+    """, unsafe_allow_html=True)
 
 with col2:
     st.subheader("5. Melanoma (MEL)")
-    st.write("""
-    Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
-    Biasanya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
-    """)
+    st.markdown("""
+    <div style='text-align: justify;'>
+        Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
+        Biasanya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
+    </div>
+    """, unsafe_allow_html=True)
 
     st.subheader("6. Melanocytic Nevi (NV)")
-    st.write("""
-    Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
-    Meskipun sebagian besar tidak berbahaya, perubahan pada tahi lalat perlu dipantau karena dapat menyerupai melanoma.
-    """)
+    st.markdown("""
+    <div style='text-align: justify;'>
+        Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
+        Meskipun sebagian besar tidak berbahaya, perubahan pada tahi lalat perlu dipantau karena dapat menyerupai melanoma.
+    </div>
+    """, unsafe_allow_html=True)
 
     st.subheader("7. Vascular Lesions (VASC)")
-    st.write("""
-    Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
-    Lesi ini biasanya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
-    """)
+    st.markdown("""
+    <div style='text-align: justify;'>
+        Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
+        Lesi ini biasanya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
+    </div>
+    """, unsafe_allow_html=True)
 
 # Catatan penting
 st.markdown("---")
