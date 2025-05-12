@@ -78,6 +78,6 @@ Deteksi dini adalah kunci untuk pengobatan yang efektif.
 # Footer
 st.markdown("""
 <div style='text-align: center; padding: 20px;'>
-    <p>© 2025 Website Prediksi Kanker Kulit. All rights reserved.</p>
+    <p>© 2025 Scancer.</p>
 </div>
 """, unsafe_allow_html=True)
