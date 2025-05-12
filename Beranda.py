@@ -9,13 +9,13 @@ st.markdown("---")
 
 # Deskripsi singkat website
 st.header("Tentang Website Ini")
-st.write("""
+st.markdown("""
 <div style='text-align: justify;'>
     Website ini dirancang untuk membantu mendeteksi potensi kanker kulit melalui analisis gambar kulit menggunakan teknologi kecerdasan buatan. 
     Dengan mengunggah gambar lesi kulit, sistem akan memberikan prediksi terkait jenis kanker kulit berdasarkan model pembelajaran mesin yang telah dilatih. 
     Harap diperhatikan bahwa prediksi ini bukan pengganti diagnosis medis profesional, melainkan alat bantu untuk meningkatkan kesadaran dan deteksi dini.
 </div>
-""")
+""", unsafe_allow_html=True)
 
 # Penjelasan jenis-jenis kanker kulit
 st.header("Jenis-Jenis Kanker Kulit")
@@ -27,7 +27,7 @@ Berikut adalah penjelasan singkat mengenai jenis-jenis kanker kulit yang dapat d
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("1. Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
+    st.subheader("1. Actinic Keratoses dan Intraepithelial Carcinoma ( PatrolAKIEC)")
     st.markdown("""
     <div style='text-align: justify;'>
         Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
