@@ -10,9 +10,9 @@ st.markdown("---")
 # Deskripsi singkat website
 st.header("Tentang Website Ini")
 st.write("""
-Website ini dirancang untuk membantu mendeteksi potensi kanker kulit melalui analisis gambar kulit menggunakan teknologi kecerdasan buatan. 
+<p style='text-align: justify;'>Website ini dirancang untuk membantu mendeteksi potensi kanker kulit melalui analisis gambar kulit menggunakan teknologi kecerdasan buatan. 
 Dengan mengunggah gambar lesi kulit, sistem akan memberikan prediksi terkait jenis kanker kulit berdasarkan model pembelajaran mesin yang telah dilatih. 
-Harap diperhatikan bahwa prediksi ini bukan pengganti diagnosis medis profesional, melainkan alat bantu untuk meningkatkan kesadaran dan deteksi dini.
+Harap diperhatikan bahwa prediksi ini bukan pengganti diagnosis medis profesional, melainkan alat bantu untuk meningkatkan kesadaran dan deteksi dini.</p>
 """)
 
 # Penjelasan jenis-jenis kanker kulit
