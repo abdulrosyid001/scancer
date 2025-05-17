@@ -30,9 +30,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("1. Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
-    st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
     st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", width=300)
-    st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
