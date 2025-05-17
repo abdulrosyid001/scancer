@@ -76,7 +76,7 @@ with col2:
     """, unsafe_allow_html=True)
 
     st.subheader("6. Melanocytic Nevi (NV)")
-    st.image("images/melanocytic_nevi.jpg", caption="Contoh Melanocytic Nevi", use_container_width=True)
+    st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_container_width=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
