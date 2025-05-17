@@ -39,7 +39,7 @@ with col1:
     """, unsafe_allow_html=True)
 
     st.subheader("2. Basal Cell Carcinoma (BCC)")
-    st.image("images/basal_cell_carcinoma.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=True)
+    st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
