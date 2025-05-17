@@ -67,7 +67,7 @@ with col1:
 
 with col2:
     st.subheader("5. Melanoma (MEL)")
-    st.image("images/melanoma.jpg", caption="Contoh Melanoma", use_container_width=True)
+    st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_container_width=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
