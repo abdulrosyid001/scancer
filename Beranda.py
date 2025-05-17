@@ -29,8 +29,8 @@ Berikut adalah penjelasan singkat mengenai jenis-jenis kanker kulit yang dapat d
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("1. Actinic Keratoses dan Intraepithelial Carcinoma (PatrolAKIEC)")
-    st.image("images/actinic_keratoses.jpg", caption="Contoh Actinic Keratoses", use_column_width=True)
+    st.subheader("1. Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
+    st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_column_width=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
