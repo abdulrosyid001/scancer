@@ -85,7 +85,7 @@ with col2:
     """, unsafe_allow_html=True)
 
     st.subheader("7. Vascular Lesions (VASC)")
-    st.image("images/vascular_lesions.jpg", caption="Contoh Vascular Lesions", use_container_width=True)
+    st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_container_width=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
