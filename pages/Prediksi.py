@@ -210,6 +210,12 @@ with st.form(key="patient_form"):
     st.markdown('<h3 class="centered-subheader">Identitas Pasien</h3>', unsafe_allow_html=True)
     gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
     age = st.number_input("Usia (dalam tahun)", min_value=0, max_value=100, step=1)
+    location = st.selectbox(
+        "Lokasi Kanker Kulit",
+        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", 
+         "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", 
+         "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
+    )
     st.info("""
     Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
     - **Punggung**: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
@@ -228,12 +234,6 @@ with st.form(key="patient_form"):
     - **Alat Kelamin**: Jarang, tetapi perlu diperiksa jika ada perubahan kulit.
     - **Ujung Jari Kaki dan Tangan**: Area akral, bisa terkena jika ada trauma atau paparan kimia.
     """)
-    location = st.selectbox(
-        "Lokasi Kanker Kulit",
-        ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", 
-         "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", 
-         "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
-    )
 
     # Bagian Input Gambar
     st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
