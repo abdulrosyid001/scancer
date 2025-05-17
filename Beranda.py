@@ -48,7 +48,7 @@ with col1:
     """, unsafe_allow_html=True)
 
     st.subheader("3. Benign Keratosis-like Lesions (BKL)")
-    st.image("images/benign_keratosis.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=True)
+    st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
