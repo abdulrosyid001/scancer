@@ -57,7 +57,7 @@ with col1:
     """, unsafe_allow_html=True)
 
     st.subheader("4. Dermatofibroma (DF)")
-    st.image("images/dermatofibroma.jpg", caption="Contoh Dermatofibroma", use_container_width=True)
+    st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_container_width=True)
     st.markdown("""
     <div style='text-align: justify;'>
         Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
