@@ -215,8 +215,8 @@ with st.form(key="patient_form"):
          "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", 
          "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
-
-        st.info("""
+    
+    st.info("""
     Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
     - *Punggung*: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
     - *Ekstrimitas Bawah*: Termasuk kaki dan paha, rentan jika sering terpapar matahari tanpa perlindungan.
