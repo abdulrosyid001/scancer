@@ -143,11 +143,11 @@ with col1:
         st.error("Gambar 'animasi_scancer.jpg' tidak ditemukan. Pastikan file berada di direktori 'Gambar kanker' relatif terhadap file Python Anda.")
 
 with col2:
-    st.markdown('<div class="main-title">AYO CEK KESEHATAN KULITMU</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-title">AYO CEK KESEHATAN KULITMU!</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-title">SCANCER Hadir Sebagai Solusi untuk Deteksi Dini Penyakit Kanker Kulit</div>', unsafe_allow_html=True)
     st.markdown("""
         <div class="description">
-            SCANCER adalah layanan kesehatan online terpercaya di Indonesia yang menghadirkan solusi untuk deteksi dini penyakit kanker kulit. Kami percaya bahwa menjaga kesehatan dengan tidak proaktif untuk memeriksakan diri sebelumm terlambat. Dengan deteksi dini, Anda dapat menghindari komplikasi serius yang dapat memengaruhi kualitas hidup.
+            SCANCER adalah layanan kesehatan online terpercaya di Indonesia yang menghadirkan solusi untuk deteksi dini penyakit kanker kulit. Kami percaya bahwa menjaga kesehatan dengan tidak proaktif untuk memeriksakan diri sebelum terlambat. Dengan deteksi dini, Anda dapat menghindari komplikasi serius yang dapat memengaruhi kualitas hidup.
         </div>
         <div class="description">
             Website ini dapat mendeteksi beberapa jenis kanker kulit, yaitu Actinic Keratoses dan Intraepithelial Carcinoma, Basal Cell Carcinoma, Benign Keratosis-like Lesions, Dermatofibroma, Melanoma, Melanocytic Nevi, dan Vascular Lesions.
