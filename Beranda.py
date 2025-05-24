@@ -122,6 +122,21 @@ st.markdown("""
         display: block;
         margin: 0 auto; /* Memastikan gambar tetap terpusat */
     }
+    /* Gaya untuk tombol Streamlit agar mirip dengan desain HTML */
+    div[data-testid="stButton"] > button {
+        background-color: #00A6A6;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 25px;
+        font-size: 16px;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+    }
+    div[data-testid="stButton"] > button:hover {
+        background-color: #008B8B; /* Warna sedikit lebih gelap saat hover */
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -285,8 +300,14 @@ if st.session_state.selected_cancer:
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Place the "CHECK SEKARANG" button centered
-st.markdown('<div class="centered-content"><button class="check-button">CEK SEKARANG</button></div>', unsafe_allow_html=True)
+# Place the "CEK SEKARANG" button centered and make it functional
+st.markdown('<div class="centered-content">', unsafe_allow_html=True)
+if st.button("CEK SEKARANG"):
+    try:
+        st.switch_page("pages/Prediksi.py")
+    except Exception as e:
+        st.error(f"Terjadi kesalahan saat beralih ke halaman Prediksi: {str(e)}")
+st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
