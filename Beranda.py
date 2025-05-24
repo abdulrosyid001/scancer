@@ -81,17 +81,15 @@ st.markdown("""
     .centered-content {
         text-align: center;
         margin: 10px auto;
-        max-width: 600px; /* Membatasi lebar konten untuk tampilan lebih rapi */
     }
     .centered-image {
         display: block;
         margin: 0 auto;
-        max-width: 300px; /* Membatasi lebar gambar agar tidak terlalu besar */
+        width: 300px;
     }
     .centered-caption {
         text-align: center;
         margin-top: 5px;
-        font-style: italic;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -141,7 +139,7 @@ if st.session_state.selected_cancer:
     st.markdown('<div class="centered-content">', unsafe_allow_html=True)
     if st.session_state.selected_cancer == "akiec":
         st.subheader("Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
-        st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_container_width=True, output_format="auto")
+        st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_column_width=False, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Actinic Keratoses</div>', unsafe_allow_html=True)
         st.markdown("""
             <div class="centered-content">
@@ -152,7 +150,7 @@ if st.session_state.selected_cancer:
 
     elif st.session_state.selected_cancer == "bcc":
         st.subheader("Basal Cell Carcinoma (BCC)")
-        st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=True, output_format="auto")
+        st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_column_width=False, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Basal Cell Carcinoma</div>', unsafe_allow_html=True)
         st.markdown("""
             <div class="centered-content">
@@ -163,7 +161,7 @@ if st.session_state.selected_cancer:
 
     elif st.session_state.selected_cancer == "bkl":
         st.subheader("Benign Keratosis-like Lesions (BKL)")
-        st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=True, output_format="auto")
+        st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_column_width=False, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Benign Keratosis-like Lesions</div>', unsafe_allow_html=True)
         st.markdown("""
             <div class="centered-content">
@@ -174,7 +172,7 @@ if st.session_state.selected_cancer:
 
     elif st.session_state.selected_cancer == "df":
         st.subheader("Dermatofibroma (DF)")
-        st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_container_width=True, output_format="auto")
+        st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_column_width=False, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Dermatofibroma</div>', unsafe_allow_html=True)
         st.markdown("""
             <div class="centered-content">
@@ -185,7 +183,7 @@ if st.session_state.selected_cancer:
 
     elif st.session_state.selected_cancer == "mel":
         st.subheader("Melanoma (MEL)")
-        st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_container_width=True, output_format="auto")
+        st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_column_width=False, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Melanoma</div>', unsafe_allow_html=True)
         st.markdown("""
             <div class="centered-content">
@@ -196,7 +194,7 @@ if st.session_state.selected_cancer:
 
     elif st.session_state.selected_cancer == "nv":
         st.subheader("Melanocytic Nevi (NV)")
-        st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_container_width=True, output_format="auto")
+        st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_column_width=False, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Melanocytic Nevi</div>', unsafe_allow_html=True)
         st.markdown("""
             <div class="centered-content">
@@ -207,7 +205,7 @@ if st.session_state.selected_cancer:
 
     elif st.session_state.selected_cancer == "vasc":
         st.subheader("Vascular Lesions (VASC)")
-        st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_container_width=True, output_format="auto")
+        st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_column_width=False, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Vascular Lesions</div>', unsafe_allow_html=True)
         st.markdown("""
             <div class="centered-content">
