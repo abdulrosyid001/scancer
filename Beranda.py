@@ -141,3 +141,103 @@ selected_cancer = cancer_values[cancer_options.index(selected_cancer_label)]
 # Update session state when the dropdown changes
 if selected_cancer != st.session_state.selected_cancer:
     st.session_state.selected_cancer = selected_cancer
+
+# Jenis-Jenis Kanker Kulit Section (Conditionally displayed based on dropdown selection)
+if st.session_state.selected_cancer:
+    st.markdown('<div class="centered-content">', unsafe_allow_html=True)
+    if st.session_state.selected_cancer == "akiec":
+        st.markdown('<h3 class="centered-content">Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)</h3>', unsafe_allow_html=True)
+        st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_container_width=True, output_format="auto")
+        st.markdown('<div class="centered-caption">Contoh Actinic Keratoses</div>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="centered-content">
+                Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
+                Jika tidak diobati, dapat berkembang menjadi intraepithelial carcinoma, yaitu kanker kulit non-invasif yang terbatas pada lapisan kulit atas.
+            </div>
+        """, unsafe_allow_html=True)
+
+    elif st.session_state.selected_cancer == "bcc":
+        st.markdown('<h3 class="centered-content">Basal Cell Carcinoma (BCC)</h3>', unsafe_allow_html=True)
+        st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=True, output_format="auto")
+        st.markdown('<div class="centered-caption">Contoh Basal Cell Carcinoma</div>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="centered-content">
+                Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
+                BCC tumbuh lambat dan jarang menyebar, tetapi dapat menyebabkan kerusakan lokal jika tidak diobati.
+            </div>
+        """, unsafe_allow_html=True)
+
+    elif st.session_state.selected_cancer == "bkl":
+        st.markdown('<h3 class="centered-content">Benign Keratosis-like Lesions (BKL)</h3>', unsafe_allow_html=True)
+        st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=True, output_format="auto")
+        st.markdown('<div class="centered-caption">Contoh Benign Keratosis-like Lesions</div>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="centered-content">
+                Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
+                Meskipun tidak berbahaya, BKL dapat menyerupai kanker kulit sehingga memerlukan pemeriksaan.
+            </div>
+        """, unsafe_allow_html=True)
+
+    elif st.session_state.selected_cancer == "df":
+        st.markdown('<h3 class="centered-content">Dermatofibroma (DF)</h3>', unsafe_allow_html=True)
+        st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_container_width=True, output_format="auto")
+        st.markdown('<div class="centered-caption">Contoh Dermatofibroma</div>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="centered-content">
+                Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
+                Lesi ini tidak berbahaya tetapi dapat menyebabkan ketidaknyamanan jika teriritasi.
+            </div>
+        """, unsafe_allow_html=True)
+
+    elif st.session_state.selected_cancer == "mel":
+        st.markdown('<h3 class="centered-content">Melanoma (MEL)</h3>', unsafe_allow_html=True)
+        st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_container_width=True, output_format="auto")
+        st.markdown('<div class="centered-caption">Contoh Melanoma</div>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="centered-content">
+                Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
+                Biasanya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
+            </div>
+        """, unsafe_allow_html=True)
+
+    elif st.session_state.selected_cancer == "nv":
+        st.markdown('<h3 class="centered-content">Melanocytic Nevi (NV)</h3>', unsafe_allow_html=True)
+        st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_container_width=True, output_format="auto")
+        st.markdown('<div class="centered-caption">Contoh Melanocytic Nevi</div>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="centered-content">
+                Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
+                Meskipun sebagian besar tidak berbahaya, perubahan pada tahi lalat perlu dipantau karena dapat menyerupai melanoma.
+            </div>
+        """, unsafe_allow_html=True)
+
+    elif st.session_state.selected_cancer == "vasc":
+        st.markdown('<h3 class="centered-content">Vascular Lesions (VASC)</h3>', unsafe_allow_html=True)
+        st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_container_width=True, output_format="auto")
+        st.markdown('<div class="centered-caption">Contoh Vascular Lesions</div>', unsafe_allow_html=True)
+        st.markdown("""
+            <div class="centered-content">
+                Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
+                Lesi ini biasanya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
+            </div>
+        """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Place the "CHECK SEKARANG" button centered
+st.markdown('<div class="centered-content"><button class="check-button">CHECK SEKARANG</button></div>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Catatan penting
+st.markdown("---")
+st.write("""
+**Catatan:** Jika Anda menemukan lesi kulit yang mencurigakan, segera konsultasikan dengan dokter kulit atau tenaga medis profesional untuk pemeriksaan lebih lanjut. 
+Deteksi dini adalah kunci untuk pengobatan yang efektif.
+""")
+
+# Footer
+st.markdown("""
+<div style='text-align: center; padding: 20px;'>
+    <p>© 2025 Scancer.</p>
+</div>
+""", unsafe_allow_html=True)
