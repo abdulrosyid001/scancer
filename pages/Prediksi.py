@@ -257,9 +257,7 @@ with st.form(key="patient_form"):
             st.info("Centang 'Aktifkan Kamera' untuk mulai mengambil foto.")
     
     # --- Tombol Submit: HARUS di dalam form ---
-    st.markdown('<h3 class="centered-subheader">Selanjutnya</h3>', unsafe_allow_html=True)
-    st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
-    submit_button = st.form_submit_button(label="Kirim")
+    submit_button = st.form_submit_button(label="Selanutnya")
     st.markdown('</div>', unsafe_allow_html=True)
 
 
