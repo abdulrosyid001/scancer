@@ -115,6 +115,13 @@ st.markdown("""
         text-align: justify;
         margin-top: 10px;
     }
+    /* Gaya khusus untuk gambar di Main Section (di bawah SCANCER) */
+    .main-section-image {
+        max-width: 400px; /* Mengatur ukuran maksimum gambar lebih kecil */
+        width: 100%; /* Responsif */
+        display: block;
+        margin: 0 auto; /* Memastikan gambar tetap terpusat */
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -129,8 +136,8 @@ st.markdown("""
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    # Menggunakan st.image untuk memuat gambar lokal
-    st.image("Gambar kanker/animasi_scancer.jpg", caption="Ilustrasi SCANCER", use_container_width=True)
+    # Menggunakan st.image untuk memuat gambar lokal dengan ukuran lebih kecil
+    st.image("Gambar kanker/animasi_scancer.jpg", use_container_width=False, output_format="auto", cls="main-section-image")
 
 with col2:
     st.markdown('<div class="main-title">AYO CHECK KESEHATAN KULITMU</div>', unsafe_allow_html=True)
@@ -219,7 +226,7 @@ if st.session_state.selected_cancer:
             st.markdown("""
                 <div class="description-text">
                     Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
-                    Biasunya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
+                    Biasanya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
                 </div>
             """, unsafe_allow_html=True)
 
@@ -245,7 +252,7 @@ if st.session_state.selected_cancer:
             st.markdown("""
                 <div class="description-text">
                     Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
-                    Lesi ini biasunya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
+                    Lesi ini biasanya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
                 </div>
             """, unsafe_allow_html=True)
     
