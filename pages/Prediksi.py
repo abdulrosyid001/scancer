@@ -235,21 +235,27 @@ with st.form(key="patient_form"):
     - *Ujung Jari Kaki dan Tangan*: Area akral, bisa terkena jika ada trauma atau paparan kimia.
     """)
 
-    # Bagian Input Gambar
-    st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
-    image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
+# Bagian Input Gambar
+st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
+image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
 
-    selected_image = None
-    if image_input_method == "Unggah Gambar":
-        uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
-        if uploaded_file is not None:
-            selected_image = Image.open(uploaded_file)
-            st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
-    else:  # Capture from Camera
+selected_image = None
+
+if image_input_method == "Unggah Gambar":
+    uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
+    if uploaded_file is not None:
+        selected_image = Image.open(uploaded_file)
+        st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
+
+elif image_input_method == "Ambil Foto":
+    activate_camera = st.checkbox("Aktifkan Kamera")
+    if activate_camera:
         picture = st.camera_input("Ambil Foto")
         if picture is not None:
             selected_image = Image.open(picture)
             st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+    else:
+        st.info("Centang 'Aktifkan Kamera' untuk mulai mengambil foto.")
 
     # Tombol Kirim
     st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
