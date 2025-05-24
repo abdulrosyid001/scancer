@@ -40,6 +40,10 @@ css = """
     margin: 0 auto;  /* Pusatkan formulir */
     padding: 0 20px;
 }
+/* Menyembunyikan pesan Streamlit default untuk camera_input */
+div[data-testid="stCameraInput"] > div > div > div > p {
+    display: none;
+}
 </style>
 """
 
@@ -235,7 +239,6 @@ with st.form(key="patient_form"):
     - *Ujung Jari Kaki dan Tangan*: Area akral, bisa terkena jika ada trauma atau paparan kimia.
     """)
 
-
     # Pemilihan metode input gambar
     image_input_method = st.radio(
         "Pilih Metode Input Gambar",
@@ -250,22 +253,22 @@ with st.form(key="patient_form"):
             st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
 
     elif image_input_method == "Ambil Foto":
-        activate_camera = st.checkbox("Aktifkan Kamera")
-        if activate_camera:
-            picture = st.camera_input("Ambil Foto")
-            if picture is not None:
-                selected_image = Image.open(picture)
-                st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+        st.info("Pastikan Anda mengizinkan akses kamera di browser Anda. Jika kamera tidak muncul, periksa izin kamera atau coba gunakan perangkat lain.")
+        picture = st.camera_input(
+            "Ambil Foto",
+            help="Klik tombol untuk mengambil foto. Pastikan kamera perangkat Anda aktif dan browser memiliki izin untuk mengakses kamera."
+        )
+        if picture is not None:
+            selected_image = Image.open(picture)
+            st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
         else:
-            st.info("Centang 'Aktifkan Kamera' untuk mulai mengambil foto.")
+            st.warning("Foto belum diambil. Silakan ambil foto menggunakan kamera atau pilih metode 'Unggah Gambar'.")
 
     # --- Tombol Submit: HARUS di dalam form ---
     st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
     st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
     submit_button = st.form_submit_button(label="Selanjutnya")
     st.markdown('</div>', unsafe_allow_html=True)
-
-
 
 # Form submission handling
 if submit_button:
@@ -279,7 +282,7 @@ if submit_button:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
     # Proceed with prediction if all models and image are available
-    if model is not None and base_model is not None and isolation_forest is not None:
+    if model is not None and base_model is not None and isolation_forest is not None and selected_image is not None:
         try:
             # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
@@ -317,4 +320,7 @@ if submit_button:
         except Exception as e:
             st.error(f"Error: {str(e)}")
     else:
-        st.error("Cannot make prediction due to missing model(s) or image.")
+        if selected_image is None:
+            st.error("Gambar diperlukan untuk membuat prediksi. Silakan unggah atau ambil foto.")
+        else:
+            st.error("Tidak dapat membuat prediksi karena model tidak tersedia atau gambar tidak valid.")
