@@ -235,9 +235,11 @@ with st.form(key="patient_form"):
     - *Ujung Jari Kaki dan Tangan*: Area akral, bisa terkena jika ada trauma atau paparan kimia.
     """)
     
-    # --- Input Gambar ---
-    st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
-    image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
+    # --- Tombol Submit: HARUS di dalam form ---
+    st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
+    submit_button = st.form_submit_button(label="Selanjutnya")
+    st.markdown('</div>', unsafe_allow_html=True)
 
     selected_image = None
     if image_input_method == "Unggah Gambar":
