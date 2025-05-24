@@ -146,7 +146,6 @@ if selected_cancer != st.session_state.selected_cancer:
 if st.session_state.selected_cancer:
     st.markdown('<div class="centered-content">', unsafe_allow_html=True)
     if st.session_state.selected_cancer == "akiec":
-        st.markdown('<h3 class="centered-content">Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)</h3>', unsafe_allow_html=True)
         st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_container_width=True, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Actinic Keratoses</div>', unsafe_allow_html=True)
         st.markdown("""
@@ -157,7 +156,6 @@ if st.session_state.selected_cancer:
         """, unsafe_allow_html=True)
 
     elif st.session_state.selected_cancer == "bcc":
-        st.markdown('<h3 class="centered-content">Basal Cell Carcinoma (BCC)</h3>', unsafe_allow_html=True)
         st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=True, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Basal Cell Carcinoma</div>', unsafe_allow_html=True)
         st.markdown("""
@@ -168,7 +166,6 @@ if st.session_state.selected_cancer:
         """, unsafe_allow_html=True)
 
     elif st.session_state.selected_cancer == "bkl":
-        st.markdown('<h3 class="centered-content">Benign Keratosis-like Lesions (BKL)</h3>', unsafe_allow_html=True)
         st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=True, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Benign Keratosis-like Lesions</div>', unsafe_allow_html=True)
         st.markdown("""
@@ -179,7 +176,6 @@ if st.session_state.selected_cancer:
         """, unsafe_allow_html=True)
 
     elif st.session_state.selected_cancer == "df":
-        st.markdown('<h3 class="centered-content">Dermatofibroma (DF)</h3>', unsafe_allow_html=True)
         st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_container_width=True, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Dermatofibroma</div>', unsafe_allow_html=True)
         st.markdown("""
@@ -190,7 +186,6 @@ if st.session_state.selected_cancer:
         """, unsafe_allow_html=True)
 
     elif st.session_state.selected_cancer == "mel":
-        st.markdown('<h3 class="centered-content">Melanoma (MEL)</h3>', unsafe_allow_html=True)
         st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_container_width=True, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Melanoma</div>', unsafe_allow_html=True)
         st.markdown("""
@@ -201,7 +196,6 @@ if st.session_state.selected_cancer:
         """, unsafe_allow_html=True)
 
     elif st.session_state.selected_cancer == "nv":
-        st.markdown('<h3 class="centered-content">Melanocytic Nevi (NV)</h3>', unsafe_allow_html=True)
         st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_container_width=True, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Melanocytic Nevi</div>', unsafe_allow_html=True)
         st.markdown("""
@@ -212,7 +206,6 @@ if st.session_state.selected_cancer:
         """, unsafe_allow_html=True)
 
     elif st.session_state.selected_cancer == "vasc":
-        st.markdown('<h3 class="centered-content">Vascular Lesions (VASC)</h3>', unsafe_allow_html=True)
         st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_container_width=True, output_format="auto")
         st.markdown('<div class="centered-caption">Contoh Vascular Lesions</div>', unsafe_allow_html=True)
         st.markdown("""
