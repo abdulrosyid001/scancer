@@ -168,7 +168,6 @@ if st.session_state.selected_cancer:
         with col_img:
             st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_container_width=False, output_format="auto")
         with col_desc:
-            st.markdown('<div class="centered-caption">Contoh Actinic Keratoses</div>', unsafe_allow_html=True)
             st.markdown("""
                 <div class="description-text">
                     Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
@@ -182,7 +181,6 @@ if st.session_state.selected_cancer:
         with col_img:
             st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=False, output_format="auto")
         with col_desc:
-            st.markdown('<div class="centered-caption">Contoh Basal Cell Carcinoma</div>', unsafe_allow_html=True)
             st.markdown("""
                 <div class="description-text">
                     Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
@@ -196,7 +194,6 @@ if st.session_state.selected_cancer:
         with col_img:
             st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=False, output_format="auto")
         with col_desc:
-            st.markdown('<div class="centered-caption">Contoh Benign Keratosis-like Lesions</div>', unsafe_allow_html=True)
             st.markdown("""
                 <div class="description-text">
                     Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
@@ -210,7 +207,6 @@ if st.session_state.selected_cancer:
         with col_img:
             st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_container_width=False, output_format="auto")
         with col_desc:
-            st.markdown('<div class="centered-caption">Contoh Dermatofibroma</div>', unsafe_allow_html=True)
             st.markdown("""
                 <div class="description-text">
                     Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
@@ -224,7 +220,6 @@ if st.session_state.selected_cancer:
         with col_img:
             st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_container_width=False, output_format="auto")
         with col_desc:
-            st.markdown('<div class="centered-caption">Contoh Melanoma</div>', unsafe_allow_html=True)
             st.markdown("""
                 <div class="description-text">
                     Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
@@ -238,7 +233,6 @@ if st.session_state.selected_cancer:
         with col_img:
             st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_container_width=False, output_format="auto")
         with col_desc:
-            st.markdown('<div class="centered-caption">Contoh Melanocytic Nevi</div>', unsafe_allow_html=True)
             st.markdown("""
                 <div class="description-text">
                     Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
@@ -252,7 +246,6 @@ if st.session_state.selected_cancer:
         with col_img:
             st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_container_width=False, output_format="auto")
         with col_desc:
-            st.markdown('<div class="centered-caption">Contoh Vascular Lesions</div>', unsafe_allow_html=True)
             st.markdown("""
                 <div class="description-text">
                     Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
