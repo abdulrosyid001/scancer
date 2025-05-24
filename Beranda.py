@@ -148,6 +148,7 @@ with col2:
     st.markdown("""
         <div class="description">
             SCANCER adalah layanan kesehatan online terpercaya di Indonesia yang menghadirkan solusi untuk deteksi dini penyakit kanker kulit. Kami percaya bahwa menjaga kesehatan dengan tidak proaktif untuk memeriksakan diri sebelumm terlambat. Dengan deteksi dini, Anda dapat menghindari komplikasi serius yang dapat memengaruhi kualitas hidup.
+            Website ini dapat mendeteksi beberapa jenis kanker kulit, yaitu Actinic Keratoses dan Intraepithelial Carcinoma, Basal Cell Carcinoma, Benign Keratosis-like Lesions, Dermatofibroma, Melanoma, Melanocytic Nevi, dan Vascular Lesions.
         </div>
     """, unsafe_allow_html=True)
 
