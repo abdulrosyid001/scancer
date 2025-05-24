@@ -95,6 +95,15 @@ st.markdown("""
         max-width: 300px; /* Membatasi lebar gambar agar tidak terlalu besar */
         width: 100%; /* Memastikan gambar responsif dalam batasan max-width */
     }
+    /* Tambahan untuk memastikan gambar Streamlit terpusat */
+    div[data-testid="stImage"] {
+        display: flex;
+        justify-content: center;
+    }
+    div[data-testid="stImage"] img {
+        display: block;
+        margin: 0 auto;
+    }
     .centered-caption {
         text-align: center;
         margin-top: 5px;
