@@ -204,9 +204,8 @@ def detect_anomalies(isolation_forest, data):
 # Data Input Section
 st.header("Informasi Pasien dan Input Gambar")
 
-# Satu formulir yang mencakup semua elemen
 with st.form(key="patient_form"):
-    # Bagian Identitas Pasien
+    # --- Identitas Pasien ---
     st.markdown('<h3 class="centered-subheader">Identitas Pasien</h3>', unsafe_allow_html=True)
     gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
     age = st.number_input("Usia (dalam tahun)", min_value=0, max_value=100, step=1)
@@ -216,7 +215,8 @@ with st.form(key="patient_form"):
          "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", 
          "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
-    st.info("""
+
+        st.info("""
     Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
     - *Punggung*: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
     - *Ekstrimitas Bawah*: Termasuk kaki dan paha, rentan jika sering terpapar matahari tanpa perlindungan.
@@ -234,34 +234,34 @@ with st.form(key="patient_form"):
     - *Alat Kelamin*: Jarang, tetapi perlu diperiksa jika ada perubahan kulit.
     - *Ujung Jari Kaki dan Tangan*: Area akral, bisa terkena jika ada trauma atau paparan kimia.
     """)
+    
+    # --- Input Gambar ---
+    st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
+    image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
 
-# Bagian Input Gambar
-st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
-image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
+    selected_image = None
+    if image_input_method == "Unggah Gambar":
+        uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
+        if uploaded_file is not None:
+            selected_image = Image.open(uploaded_file)
+            st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
 
-selected_image = None
-
-if image_input_method == "Unggah Gambar":
-    uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        selected_image = Image.open(uploaded_file)
-        st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
-
-elif image_input_method == "Ambil Foto":
-    activate_camera = st.checkbox("Aktifkan Kamera")
-    if activate_camera:
-        picture = st.camera_input("Ambil Foto")
-        if picture is not None:
-            selected_image = Image.open(picture)
-            st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
-    else:
-        st.info("Centang 'Aktifkan Kamera' untuk mulai mengambil foto.")
-
-    # Tombol Kirim
+    elif image_input_method == "Ambil Foto":
+        activate_camera = st.checkbox("Aktifkan Kamera")
+        if activate_camera:
+            picture = st.camera_input("Ambil Foto")
+            if picture is not None:
+                selected_image = Image.open(picture)
+                st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+        else:
+            st.info("Centang 'Aktifkan Kamera' untuk mulai mengambil foto.")
+    
+    # --- Tombol Submit: HARUS di dalam form ---
     st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
     st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
     submit_button = st.form_submit_button(label="Kirim")
     st.markdown('</div>', unsafe_allow_html=True)
+
 
 # Form submission handling
 if submit_button:
