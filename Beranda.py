@@ -116,7 +116,7 @@ st.markdown("""
         margin-top: 10px;
     }
     /* Gaya khusus untuk gambar di Main Section (di bawah SCANCER) */
-    .main-section-image {
+    div[data-testid="stImage"].main-section-image img {
         max-width: 400px; /* Mengatur ukuran maksimum gambar lebih kecil */
         width: 100%; /* Responsif */
         display: block;
@@ -137,7 +137,10 @@ col1, col2 = st.columns([1, 1])
 
 with col1:
     # Menggunakan st.image untuk memuat gambar lokal dengan ukuran lebih kecil
-    st.image("Gambar kanker/animasi_scancer.jpg", use_container_width=False, output_format="auto", cls="main-section-image")
+    try:
+        st.image("Gambar kanker/animasi_scancer.jpg", use_container_width=False, output_format="auto")
+    except FileNotFoundError:
+        st.error("Gambar 'animasi_scancer.jpg' tidak ditemukan. Pastikan file berada di direktori 'Gambar kanker' relatif terhadap file Python Anda.")
 
 with col2:
     st.markdown('<div class="main-title">AYO CHECK KESEHATAN KULITMU</div>', unsafe_allow_html=True)
@@ -169,7 +172,10 @@ if st.session_state.selected_cancer:
     if st.session_state.selected_cancer == "akiec":
         col_img, col_desc = st.columns([1, 1])
         with col_img:
-            st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_container_width=False, output_format="auto")
+            try:
+                st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_container_width=False, output_format="auto")
+            except FileNotFoundError:
+                st.error("Gambar 'ISIC_0024539.jpg' tidak ditemukan di direktori 'Gambar kanker/AKIEC'.")
         with col_desc:
             st.markdown("""
                 <div class="description-text">
@@ -182,7 +188,10 @@ if st.session_state.selected_cancer:
     elif st.session_state.selected_cancer == "bcc":
         col_img, col_desc = st.columns([1, 1])
         with col_img:
-            st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=False, output_format="auto")
+            try:
+                st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_container_width=False, output_format="auto")
+            except FileNotFoundError:
+                st.error("Gambar 'ISIC_0024457.jpg' tidak ditemukan di direktori 'Gambar kanker/BCC'.")
         with col_desc:
             st.markdown("""
                 <div class="description-text">
@@ -195,7 +204,10 @@ if st.session_state.selected_cancer:
     elif st.session_state.selected_cancer == "bkl":
         col_img, col_desc = st.columns([1, 1])
         with col_img:
-            st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=False, output_format="auto")
+            try:
+                st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_container_width=False, output_format="auto")
+            except FileNotFoundError:
+                st.error("Gambar 'ISIC_0024381.jpg' tidak ditemukan di direktori 'Gambar kanker/BKL'.")
         with col_desc:
             st.markdown("""
                 <div class="description-text">
@@ -208,7 +220,10 @@ if st.session_state.selected_cancer:
     elif st.session_state.selected_cancer == "df":
         col_img, col_desc = st.columns([1, 1])
         with col_img:
-            st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_container_width=False, output_format="auto")
+            try:
+                st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_container_width=False, output_format="auto")
+            except FileNotFoundError:
+                st.error("Gambar 'ISIC_0024973.jpg' tidak ditemukan di direktori 'Gambar kanker/DF'.")
         with col_desc:
             st.markdown("""
                 <div class="description-text">
@@ -221,7 +236,10 @@ if st.session_state.selected_cancer:
     elif st.session_state.selected_cancer == "mel":
         col_img, col_desc = st.columns([1, 1])
         with col_img:
-            st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_container_width=False, output_format="auto")
+            try:
+                st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_container_width=False, output_format="auto")
+            except FileNotFoundError:
+                st.error("Gambar 'ISIC_0024545.jpg' tidak ditemukan di direktori 'Gambar kanker/MEL'.")
         with col_desc:
             st.markdown("""
                 <div class="description-text">
@@ -234,7 +252,10 @@ if st.session_state.selected_cancer:
     elif st.session_state.selected_cancer == "nv":
         col_img, col_desc = st.columns([1, 1])
         with col_img:
-            st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_container_width=False, output_format="auto")
+            try:
+                st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_container_width=False, output_format="auto")
+            except FileNotFoundError:
+                st.error("Gambar 'ISIC_0024319.jpg' tidak ditemukan di direktori 'Gambar kanker/NV'.")
         with col_desc:
             st.markdown("""
                 <div class="description-text">
@@ -247,7 +268,10 @@ if st.session_state.selected_cancer:
     elif st.session_state.selected_cancer == "vasc":
         col_img, col_desc = st.columns([1, 1])
         with col_img:
-            st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_container_width=False, output_format="auto")
+            try:
+                st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_container_width=False, output_format="auto")
+            except FileNotFoundError:
+                st.error("Gambar 'ISIC_0024662.jpg' tidak ditemukan di direktori 'Gambar kanker/VASC'.")
         with col_desc:
             st.markdown("""
                 <div class="description-text">
