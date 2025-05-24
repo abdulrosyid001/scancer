@@ -257,7 +257,7 @@ with st.form(key="patient_form"):
             st.info("Centang 'Aktifkan Kamera' untuk mulai mengambil foto.")
     
     # --- Tombol Submit: HARUS di dalam form ---
-    submit_button = st.form_submit_button(label="Selanutnya")
+    submit_button = st.form_submit_button(label="Selanjutnya")
     st.markdown('</div>', unsafe_allow_html=True)
 
 
