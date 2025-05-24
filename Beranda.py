@@ -132,7 +132,7 @@ with col1:
     # Placeholder for the image (since Streamlit cannot directly render the illustration)
     st.markdown("""
         <div style="text-align: center;">
-            <img src="https://via.placeholder.com/400x400.png?text=Illustration" alt="Illustration" style="width: 100%;">
+            <img src="Gambar kanker/animasi_scancer.jpg" alt="Illustration" style="width: 100%;">
         </div>
     """, unsafe_allow_html=True)
 
