@@ -81,11 +81,6 @@ st.markdown("""
 st.markdown("""
     <div class="navbar">
         <span style="font-size: 24px; font-weight: bold;">SCANCER</span>
-        <div>
-            <a href="#">Beranda</a>
-            <a href="#">Prediksi</a>
-            <a href="#">FAQ</a>
-        </div>
     </div>
 """, unsafe_allow_html=True)
 
