@@ -129,12 +129,8 @@ st.markdown("""
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    # Placeholder for the image (since Streamlit cannot directly render the illustration)
-    st.markdown("""
-        <div style="text-align: center;">
-            <img src="Gambar kanker/animasi_scancer.jpg" alt="Illustration" style="width: 100%;">
-        </div>
-    """, unsafe_allow_html=True)
+    # Menggunakan st.image untuk memuat gambar lokal
+    st.image("Gambar kanker/animasi_scancer.jpg", caption="Ilustrasi SCANCER", use_container_width=True)
 
 with col2:
     st.markdown('<div class="main-title">AYO CHECK KESEHATAN KULITMU</div>', unsafe_allow_html=True)
@@ -223,7 +219,7 @@ if st.session_state.selected_cancer:
             st.markdown("""
                 <div class="description-text">
                     Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
-                    Biasanya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
+                    Biasunya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
                 </div>
             """, unsafe_allow_html=True)
 
@@ -249,7 +245,7 @@ if st.session_state.selected_cancer:
             st.markdown("""
                 <div class="description-text">
                     Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
-                    Lesi ini biasanya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
+                    Lesi ini biasunya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
                 </div>
             """, unsafe_allow_html=True)
     
