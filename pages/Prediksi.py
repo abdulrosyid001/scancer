@@ -1,4 +1,4 @@
-import streamlit as st
+*import streamlit as st
 import cv2
 import numpy as np
 from PIL import Image
@@ -54,21 +54,24 @@ try:
     model = xgb.Booster()
     model.load_model("model_xgboost_81.json")
 except FileNotFoundError:
-    st.error("XGBoost model file 'model_xgboost_81.json' not found. Please ensure the file is in the correct directory.")
+    st.error("XGBoost model file 'model_xgboost_81.json' not found.")
     model = None
 except Exception as e:
     st.error(f"Error loading XGBoost model: {str(e)}")
     model = None
 
-# Load the Isolation Forest model
+# Load the Isolation Forest model and scaler
 try:
     isolation_forest = joblib.load("model_isolation_forest.pkl")
+    scaler = joblib.load("scaler.joblib")
 except FileNotFoundError:
-    st.error("Isolation Forest model file not found. Please ensure 'model_isolation_forest.pkl' is in the correct directory.")
+    st.error("Isolation Forest model or scaler file not found. Please ensure 'model_isolation_forest.pkl' and 'scaler.joblib' are in the correct directory.")
     isolation_forest = None
+    scaler = None
 except Exception as e:
-    st.error(f"Error loading Isolation Forest model: {str(e)}")
+    st.error(f"Error loading Isolation Forest model or scaler: {str(e)}")
     isolation_forest = None
+    scaler = None
 
 # Load MobileNetV2 for feature extraction
 try:
@@ -178,22 +181,27 @@ advice_mapping = {
 
 # Function to extract features from an image
 def extract_image_features(img, model):
-    img = img.resize((224, 224))
-    img_array = np.array(img)
-    if len(img_array.shape) == 2:
-        img_array = np.stack([img_array] * 3, axis=-1)
-    elif img_array.shape[2] == 4:
-        img_array = img_array[:, :, :3]
-    img_array = np.expand_dims(img_array, axis=0)
-    img_array = preprocess_input(img_array)
-    features = model.predict(img_array, verbose=0)
-    return features.flatten()
+    try:
+        img = img.resize((224, 224))
+        img_array = np.array(img)
+        if len(img_array.shape) == 2:
+            img_array = np.stack([img_array] * 3, axis=-1)
+        elif img_array.shape[2] == 4:
+            img_array = img_array[:, :, :3]
+        img_array = np.expand_dims(img_array, axis=0)
+        img_array = preprocess_input(img_array)
+        features = model.predict(img_array, verbose=0)
+        return features.flatten()
+    except Exception as e:
+        st.error(f"Error processing image: {str(e)}")
+        return None
 
 # Function to detect anomalies using Isolation Forest
-def detect_anomalies(isolation_forest, data):
-    predictions = isolation_forest.predict(data)
+def detect_anomalies(isolation_forest, data, scaler):
+    data_scaled = scaler.transform(data)
+    predictions = isolation_forest.predict(data_scaled)
     anomalies = predictions == -1
-    scores = isolation_forest.score_samples(data)
+    scores = isolation_forest.score_samples(data_scaled)
     return scores, anomalies
 
 # Page rendering based on session state
@@ -215,29 +223,77 @@ elif st.session_state.page == "Prediction":
         gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
         age = st.number_input("Usia (dalam tahun)", min_value=0, max_value=100, step=1)
         location = st.selectbox(
-            "izational_forest = None
-            st.error("Cannot proceed with prediction due to missing model(s) or image.")
+            "Lokasi Kanker Kulit",
+            ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah",
+             "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga",
+             "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
+        )
+        st.info("""
+        Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
+        - Punggung: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
+        - Ekstrimitas Bawah: Termasuk kaki dan paha, rentan jika sering terpapar matahari tanpa perlindungan.
+        - Torso: Bagian tengah tubuh, termasuk perut dan sisi, bisa terkena kanker akibat paparan UV.
+        - Ekstrimitas Atas: Termasuk lengan dan bahu, sering terkena sinar matahari langsung.
+        - Perut: Area yang kurang terpapar tapi bisa terkena jika tidak dilindungi.
+        - Wajah: Salah satu area paling rentan karena sering terpapar sinar matahari.
+        - Dada: Rentan terutama pada pria karena paparan sinar matahari tanpa perlindungan.
+        - Kaki: Termasuk telapak kaki, bisa terkena jika sering berjalan tanpa alas kaki di luar.
+        - Tidak Diketahui: Pilih jika lokasi tidak dapat ditentukan dengan pasti.
+        - Leher: Area yang sering terpapar sinar matahari, meningkatkan risiko kanker.
+        - Kulit Kepala: Rentan terutama pada orang botak karena paparan langsung sinar matahari.
+        - Tangan: Termasuk jari, sering terkena paparan lingkungan dan sinar matahari.
+        - Telinga: Area kecil tapi sangat rentan terhadap kanker kulit akibat sinar UV.
+        - Alat Kelamin: Jarang, tetapi perlu diperiksa jika ada perubahan kulit.
+        - Ujung Jari Kaki dan Tangan: Area akral, bisa terkena jika ada trauma atau paparan kimia.
+        """)
+
+        st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
+        image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
+        selected_image = None
+        if image_input_method == "Unggah Gambar":
+            uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
+            if uploaded_file is not None:
+                selected_image = Image.open(uploaded_file)
+                st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
+        else:
+            picture = st.camera_input("Ambil Foto")
+            if picture is not None:
+                selected_image = Image.open(picture)
+                st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+
+        st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
+        st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
+        submit_button = st.form_submit_button(label="Kirim")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    if submit_button:
+        st.success("Data berhasil dikirim")
+        st.write(f"Jenis Kelamin: {gender}")
+        st.write(f"Usia: {age}")
+        st.write(f"Lokasi Kanker Kulit: {location}")
+
+        if selected_image is None:
+            st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
             st.stop()
 
-        # Extract image features
+        if model is None or base_model is None or isolation_forest is None or scaler is None:
+            st.error("Cannot proceed with prediction due to missing model(s) or scaler.")
+            st.stop()
+
         with st.spinner("Processing image and predicting..."):
             image_features = extract_image_features(selected_image, base_model)
             if image_features is None:
-                st.error("Failed to extract image features. Please try another image.")
                 st.stop()
 
-            # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
             location_english = location_translation[location]
             encoded_location = location_mapping[location_english]
 
-            # Combine features
             feature_names = [f"{i}" for i in range(image_features.shape[0])] + ["age", "sex", "localization"]
             combined_features = np.concatenate([image_features, [age, encoded_gender, encoded_location]])
             input_data = pd.DataFrame([combined_features], columns=feature_names)
 
-            # Check for anomaly using Isolation Forest
-            scores, anomalies = detect_anomalies(isolation_forest, input_data)
+            scores, anomalies = detect_anomalies(isolation_forest, input_data, scaler)
 
             if anomalies[0]:
                 st.markdown(f"""
@@ -246,7 +302,6 @@ elif st.session_state.page == "Prediction":
                 Jika Anda memiliki kekhawatiran, konsultasikan dengan dokter kulit.
                 """)
             else:
-                # Convert to DMatrix for XGBoost Booster
                 dmatrix = xgb.DMatrix(input_data)
                 prediction = model.predict(dmatrix)[0]
                 result_code = class_mapping[int(prediction)]
@@ -255,8 +310,7 @@ elif st.session_state.page == "Prediction":
                 st.write(f"Prediksi Tipe Kanker Kulit: {result_name}")
                 st.markdown(advice_mapping[result_code])
 
-        # Kembali ke Beranda button
         st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
         if st.button("Kembali ke Beranda"):
             st.session_state.page = "Beranda"
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)*
