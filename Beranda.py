@@ -25,7 +25,11 @@ st.markdown("""
         margin: 0 15px;
         font-size: 16px;
     }
-    .navbar select {
+    .navbar div {
+        display: flex;
+        align-items: center;
+    }
+    .custom-selectbox {
         background-color: white;
         color: #FF4B4B;
         border: 1px solid #FF4B4B;
@@ -58,6 +62,18 @@ st.markdown("""
         font-size: 16px;
         cursor: pointer;
     }
+    /* Style for Streamlit selectbox */
+    div[data-testid="stSelectbox"] > div {
+        background-color: white;
+        color: #FF4B4B;
+        border: 1px solid #FF4B4B;
+        border-radius: 20px;
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+    div[data-testid="stSelectbox"] > div > div {
+        color: #FF4B4B;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -69,24 +85,15 @@ st.markdown("""
             <a href="#">Beranda</a>
             <a href="#">Prediksi</a>
             <a href="#">FAQ</a>
-            <select id="cancer_select" onchange="this.form.submit()">
-                <option value="">Jenis-Jenis Kanker Kulit</option>
-                <option value="akiec">AKIEC</option>
-                <option value="bcc">BCC</option>
-                <option value="bkl">BKL</option>
-                <option value="df">DF</option>
-                <option value="mel">Melanoma</option>
-                <option value="nv">Melanocytic Nevi</option>
-                <option value="vasc">Vascular Lesions</option>
-            </select>
-        </div>
-    </div>
 """, unsafe_allow_html=True)
 
-# Capture the selected value from the dropdown
-# Since Streamlit doesn't directly support HTML form submissions, we use a hidden selectbox to sync with the HTML dropdown
-cancer_options = ["", "akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"]
-selected_cancer = st.selectbox("Hidden Selectbox", cancer_options, index=0, label_visibility="hidden", key="cancer_select_hidden")
+# Add Streamlit selectbox for cancer types
+cancer_options = ["Jenis-Jenis Kanker Kulit", "AKIEC", "BCC", "BKL", "DF", "Melanoma", "Melanocytic Nevi", "Vascular Lesions"]
+cancer_values = ["", "akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"]
+selected_cancer_label = st.selectbox("", cancer_options, index=0, label_visibility="hidden")
+selected_cancer = cancer_values[cancer_options.index(selected_cancer_label)]
+
+st.markdown("</div></div>", unsafe_allow_html=True)
 
 # Update session state when the dropdown changes
 if selected_cancer != st.session_state.selected_cancer:
