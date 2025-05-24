@@ -203,7 +203,7 @@ def detect_anomalies(isolation_forest, data):
 
 # Data Input Section
 st.header("Informasi Pasien dan Input Gambar")
-
+    
 with st.form(key="patient_form"):
     # --- Identitas Pasien ---
     st.markdown('<h3 class="centered-subheader">Identitas Pasien</h3>', unsafe_allow_html=True)
@@ -215,7 +215,7 @@ with st.form(key="patient_form"):
          "Dada", "Kaki", "Tidak Diketahui", "Leher", "Kulit Kepala", "Tangan", "Telinga", 
          "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
-    
+
     st.info("""
     Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
     - *Punggung*: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
@@ -234,12 +234,13 @@ with st.form(key="patient_form"):
     - *Alat Kelamin*: Jarang, tetapi perlu diperiksa jika ada perubahan kulit.
     - *Ujung Jari Kaki dan Tangan*: Area akral, bisa terkena jika ada trauma atau paparan kimia.
     """)
-    
-    # --- Tombol Submit: HARUS di dalam form ---
-    st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
-    st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
-    submit_button = st.form_submit_button(label="Selanjutnya")
-    st.markdown('</div>', unsafe_allow_html=True)
+
+
+    # Pemilihan metode input gambar
+    image_input_method = st.radio(
+        "Pilih Metode Input Gambar",
+        ("Unggah Gambar", "Ambil Foto")
+    )
 
     selected_image = None
     if image_input_method == "Unggah Gambar":
@@ -257,10 +258,13 @@ with st.form(key="patient_form"):
                 st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
         else:
             st.info("Centang 'Aktifkan Kamera' untuk mulai mengambil foto.")
-    
+
     # --- Tombol Submit: HARUS di dalam form ---
+    st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
     submit_button = st.form_submit_button(label="Selanjutnya")
     st.markdown('</div>', unsafe_allow_html=True)
+
 
 
 # Form submission handling
