@@ -78,19 +78,6 @@ st.markdown("""
         margin-top: 20px;
         text-align: center;
     }
-    .centered-content {
-        text-align: center;
-        margin: 10px auto;
-    }
-    .centered-image {
-        display: block;
-        margin: 0 auto;
-        width: 300px;
-    }
-    .centered-caption {
-        text-align: center;
-        margin-top: 5px;
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -136,87 +123,64 @@ if selected_cancer != st.session_state.selected_cancer:
 
 # Jenis-Jenis Kanker Kulit Section (Conditionally displayed based on dropdown selection)
 if st.session_state.selected_cancer:
-    st.markdown('<div class="centered-content">', unsafe_allow_html=True)
     if st.session_state.selected_cancer == "akiec":
         st.subheader("Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
-        st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", use_column_width=False, output_format="auto")
-        st.markdown('<div class="centered-caption">Contoh Actinic Keratoses</div>', unsafe_allow_html=True)
+        st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", width=300)
         st.markdown("""
-            <div class="centered-content">
-                Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
-                Jika tidak diobati, dapat berkembang menjadi intraepithelial carcinoma, yaitu kanker kulit non-invasif yang terbatas pada lapisan kulit atas.
-            </div>
-        """, unsafe_allow_html=True)
+            Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
+            Jika tidak diobati, dapat berkembang menjadi intraepithelial carcinoma, yaitu kanker kulit non-invasif yang terbatas pada lapisan kulit atas.
+        """)
 
     elif st.session_state.selected_cancer == "bcc":
         st.subheader("Basal Cell Carcinoma (BCC)")
-        st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", use_column_width=False, output_format="auto")
-        st.markdown('<div class="centered-caption">Contoh Basal Cell Carcinoma</div>', unsafe_allow_html=True)
+        st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", width=300)
         st.markdown("""
-            <div class="centered-content">
-                Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
-                BCC tumbuh lambat dan jarang menyebar, tetapi dapat menyebabkan kerusakan lokal jika tidak diobati.
-            </div>
-        """, unsafe_allow_html=True)
+            Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
+            BCC tumbuh lambat dan jarang menyebar, tetapi dapat menyebabkan kerusakan lokal jika tidak diobati.
+        """)
 
     elif st.session_state.selected_cancer == "bkl":
         st.subheader("Benign Keratosis-like Lesions (BKL)")
-        st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", use_column_width=False, output_format="auto")
-        st.markdown('<div class="centered-caption">Contoh Benign Keratosis-like Lesions</div>', unsafe_allow_html=True)
+        st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", width=300)
         st.markdown("""
-            <div class="centered-content">
-                Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
-                Meskipun tidak berbahaya, BKL dapat menyerupai kanker kulit sehingga memerlukan pemeriksaan.
-            </div>
-        """, unsafe_allow_html=True)
+            Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
+            Meskipun tidak berbahaya, BKL dapat menyerupai kanker kulit sehingga memerlukan pemeriksaan.
+        """)
 
     elif st.session_state.selected_cancer == "df":
         st.subheader("Dermatofibroma (DF)")
-        st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", use_column_width=False, output_format="auto")
-        st.markdown('<div class="centered-caption">Contoh Dermatofibroma</div>', unsafe_allow_html=True)
+        st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", width=300)
         st.markdown("""
-            <div class="centered-content">
-                Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
-                Lesi ini tidak berbahaya tetapi dapat menyebabkan ketidaknyamanan jika teriritasi.
-            </div>
-        """, unsafe_allow_html=True)
+            Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
+            Lesi ini tidak berbahaya tetapi dapat menyebabkan ketidaknyamanan jika teriritasi.
+        """)
 
     elif st.session_state.selected_cancer == "mel":
         st.subheader("Melanoma (MEL)")
-        st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", use_column_width=False, output_format="auto")
-        st.markdown('<div class="centered-caption">Contoh Melanoma</div>', unsafe_allow_html=True)
+        st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", width=300)
         st.markdown("""
-            <div class="centered-content">
-                Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
-                Biasanya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
-            </div>
-        """, unsafe_allow_html=True)
+            Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
+            Biasanya muncul sebagai tahi lalat asimetris dengan warna tidak seragam, batas tidak teratur, atau perubahan ukuran.
+        """)
 
     elif st.session_state.selected_cancer == "nv":
         st.subheader("Melanocytic Nevi (NV)")
-        st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", use_column_width=False, output_format="auto")
-        st.markdown('<div class="centered-caption">Contoh Melanocytic Nevi</div>', unsafe_allow_html=True)
+        st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", width=300)
         st.markdown("""
-            <div class="centered-content">
-                Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
-                Meskipun sebagian besar tidak berbahaya, perubahan pada tahi lalat perlu dipantau karena dapat menyerupai melanoma.
-            </div>
-        """, unsafe_allow_html=True)
+            Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
+            Meskipun sebagian besar tidak berbahaya, perubahan pada tahi lalat perlu dipantau karena dapat menyerupai melanoma.
+        """)
 
     elif st.session_state.selected_cancer == "vasc":
         st.subheader("Vascular Lesions (VASC)")
-        st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", use_column_width=False, output_format="auto")
-        st.markdown('<div class="centered-caption">Contoh Vascular Lesions</div>', unsafe_allow_html=True)
+        st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", width=300)
         st.markdown("""
-            <div class="centered-content">
-                Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
-                Lesi ini biasanya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
-            </div>
-        """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+            Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
+            Lesi ini biasanya jinak tetapi dapat menyerupai lesi kulit lain sehingga memerlukan evaluasi.
+        """)
 
-# Place the "CHECK SEKARANG" button centered
-st.markdown('<div class="centered-content"><button class="check-button">CHECK SEKARANG</button></div>', unsafe_allow_html=True)
+# Place the "CHECK SEKARANG" button
+st.markdown('<button class="check-button">CHECK SEKARANG</button>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
