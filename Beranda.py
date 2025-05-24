@@ -110,7 +110,7 @@ with col2:
     """, unsafe_allow_html=True)
 
     # Add Streamlit selectbox for cancer types (moved above the button)
-    cancer_options = ["Jenis-Jenis Kanker Kulit", "AKIEC", "BCC", "BKL", "DF", "Melanoma", "Melanocytic Nevi", "Vascular Lesions"]
+    cancer_options = ["Jenis-Jenis Kanker Kulit", "Actinic Keratoses dan Intraepithelial Carcinoma", "Basal Cell Carcinoma", "Benign Keratosis-like Lesions", "Dermatofibroma", "Melanoma", "Melanocytic Nevi", "Vascular Lesions"]
     cancer_values = ["", "akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"]
     selected_cancer_label = st.selectbox("", cancer_options, index=0, label_visibility="hidden")
     selected_cancer = cancer_values[cancer_options.index(selected_cancer_label)]
@@ -121,9 +121,8 @@ with col2:
 
     # Jenis-Jenis Kanker Kulit Section (Conditionally displayed based on dropdown selection, above the button)
     if st.session_state.selected_cancer:
-        st.markdown("---")
         if st.session_state.selected_cancer == "akiec":
-            st.subheader("1. Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
+            st.subheader("Actinic Keratoses dan Intraepithelial Carcinoma (AKIEC)")
             st.image("Gambar kanker/AKIEC/ISIC_0024539.jpg", caption="Contoh Actinic Keratoses", width=300)
             st.markdown("""
                 Actinic keratoses adalah lesi kulit bersisik atau berkerak yang disebabkan oleh paparan sinar matahari jangka panjang. 
@@ -131,7 +130,7 @@ with col2:
             """)
 
         elif st.session_state.selected_cancer == "bcc":
-            st.subheader("2. Basal Cell Carcinoma (BCC)")
+            st.subheader("Basal Cell Carcinoma (BCC)")
             st.image("Gambar kanker/BCC/ISIC_0024457.jpg", caption="Contoh Basal Cell Carcinoma", width=300)
             st.markdown("""
                 Kanker sel basal adalah jenis kanker kulit yang paling umum, biasanya muncul sebagai benjolan mengkilap atau luka yang tidak sembuh. 
@@ -139,7 +138,7 @@ with col2:
             """)
 
         elif st.session_state.selected_cancer == "bkl":
-            st.subheader("3. Benign Keratosis-like Lesions (BKL)")
+            st.subheader("Benign Keratosis-like Lesions (BKL)")
             st.image("Gambar kanker/BKL/ISIC_0024381.jpg", caption="Contoh Benign Keratosis-like Lesions", width=300)
             st.markdown("""
                 Lesi ini adalah pertumbuhan kulit jinak yang menyerupai keratosis seboroik, sering kali berupa bercak cokelat atau hitam yang tampak seperti kutil. 
@@ -147,7 +146,7 @@ with col2:
             """)
 
         elif st.session_state.selected_cancer == "df":
-            st.subheader("4. Dermatofibroma (DF)")
+            st.subheader("Dermatofibroma (DF)")
             st.image("Gambar kanker/DF/ISIC_0024973.jpg", caption="Contoh Dermatofibroma", width=300)
             st.markdown("""
                 Dermatofibroma adalah nodul kulit jinak yang biasanya keras, berwarna cokelat atau kemerahan, dan sering muncul di kaki. 
@@ -155,7 +154,7 @@ with col2:
             """)
 
         elif st.session_state.selected_cancer == "mel":
-            st.subheader("5. Melanoma (MEL)")
+            st.subheader("Melanoma (MEL)")
             st.image("Gambar kanker/MEL/ISIC_0024545.jpg", caption="Contoh Melanoma", width=300)
             st.markdown("""
                 Melanoma adalah jenis kanker kulit yang paling berbahaya karena dapat menyebar ke bagian tubuh lain. 
@@ -163,7 +162,7 @@ with col2:
             """)
 
         elif st.session_state.selected_cancer == "nv":
-            st.subheader("6. Melanocytic Nevi (NV)")
+            st.subheader("Melanocytic Nevi (NV)")
             st.image("Gambar kanker/NV/ISIC_0024319.jpg", caption="Contoh Melanocytic Nevi", width=300)
             st.markdown("""
                 Melanocytic nevi, atau tahi lalat, adalah pertumbuhan kulit jinak yang disebabkan oleh sel melanosit. 
@@ -171,7 +170,7 @@ with col2:
             """)
 
         elif st.session_state.selected_cancer == "vasc":
-            st.subheader("7. Vascular Lesions (VASC)")
+            st.subheader("Vascular Lesions (VASC)")
             st.image("Gambar kanker/VASC/ISIC_0024662.jpg", caption="Contoh Vascular Lesions", width=300)
             st.markdown("""
                 Lesi vaskular adalah pertumbuhan kulit yang berhubungan dengan pembuluh darah, seperti hemangioma atau angioma. 
