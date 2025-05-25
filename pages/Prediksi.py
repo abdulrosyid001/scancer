@@ -40,17 +40,15 @@ css = """
     margin: 0 auto;  /* Pusatkan formulir */
     padding: 0 20px;
 }
+/* Menyembunyikan pesan Streamlit default untuk camera_input */
+div[data-testid="stCameraInput"] > div > div > div > p {
+    display: none;
+}
 </style>
 """
 
-# Set page configuration
-st.set_page_config(page_title="Scancer", layout="wide")
-
 # Menyisipkan CSS di aplikasi
 st.markdown(css, unsafe_allow_html=True)
-
-# Title
-st.title("Scancer: Deteksi Kanker Kulit")
 
 # Load the XGBoost model from JSON
 try:
@@ -143,31 +141,31 @@ full_name_mapping = {
 # Saran tindakan untuk pasien berdasarkan jenis kanker kulit
 advice_mapping = {
     "akiec": """
-    **Saran Tindakan:**  
+    *Saran Tindakan:*  
     Keratosis Aktinik dapat berkembang menjadi kanker kulit jika tidak ditangani. Segera konsultasikan dengan dokter kulit untuk evaluasi lebih lanjut. Dokter mungkin merekomendasikan krioterapi, terapi topikal (seperti fluorouracil atau imiquimod), atau biopsi untuk memastikan diagnosis. Lindungi kulit Anda dari paparan sinar matahari berlebih dengan menggunakan tabir surya SPF tinggi dan pakaian pelindung.
     """,
     "bcc": """
-    **Saran Tindakan:**  
+    *Saran Tindakan:*  
     Karsinoma Sel Basal adalah jenis kanker kulit yang umum, biasanya tidak menyebar tetapi dapat merusak jaringan di sekitarnya. Segera temui dokter kulit untuk pemeriksaan lebih lanjut. Pengobatan dapat meliputi eksisi bedah, terapi radiasi, atau krioterapi, tergantung pada ukuran dan lokasi. Pastikan untuk memantau perubahan pada kulit Anda dan gunakan tabir surya setiap hari.
     """,
     "bkl": """
-    **Saran Tindakan:**  
+    *Saran Tindakan:*  
     Lesion Mirip Keratosis Jinak biasanya tidak berbahaya, tetapi penting untuk memastikan diagnosis yang tepat. Konsultasikan dengan dokter kulit untuk memastikan lesion ini jinak. Jika ada perubahan warna, ukuran, atau bentuk, segera periksakan. Gunakan tabir surya untuk mencegah kerusakan kulit lebih lanjut.
     """,
     "df": """
-    **Saran Tindakan:**  
+    *Saran Tindakan:*  
     Dermatofibroma umumnya jinak dan tidak memerlukan pengobatan kecuali menyebabkan ketidaknyamanan atau perubahan yang mencurigakan. Namun, untuk memastikan diagnosis, konsultasikan dengan dokter kulit. Jika diperlukan, dokter mungkin merekomendasikan eksisi kecil. Pantau lesion untuk setiap perubahan yang tidak biasa.
     """,
     "mel": """
-    **Saran Tindakan:**  
+    *Saran Tindakan:*  
     Melanoma adalah jenis kanker kulit yang serius dan dapat menyebar ke bagian tubuh lain jika tidak diobati. Segera temui dokter kulit atau onkologis untuk evaluasi lebih lanjut. Dokter mungkin akan merekomendasikan biopsi, eksisi bedah, atau pemeriksaan lebih lanjut untuk menentukan stadium kanker. Jangan tunda pengobatan, dan hindari paparan sinar matahari langsung.
     """,
     "nv": """
-    **Saran Tindakan:**  
+    *Saran Tindakan:*  
     Nevi Melanositik biasanya jinak, tetapi beberapa dapat berkembang menjadi melanoma. Konsultasikan dengan dokter kulit untuk memastikan tidak ada tanda-tanda keganasan (perubahan warna, bentuk, atau ukuran). Pantau tahi lalat Anda secara rutin menggunakan metode ABCDE (Asymmetry, Border, Color, Diameter, Evolving) dan gunakan tabir surya untuk perlindungan.
     """,
     "vasc": """
-    **Saran Tindakan:**  
+    *Saran Tindakan:*  
     Lesion Vaskular biasanya jinak, tetapi penting untuk memastikan diagnosis. Konsultasikan dengan dokter kulit untuk mengevaluasi lesion ini. Jika tidak menyebabkan masalah, mungkin tidak memerlukan pengobatan. Namun, jika ada perubahan atau ketidaknyamanan, dokter mungkin merekomendasikan laser atau prosedur kecil lainnya.
     """
 }
@@ -209,31 +207,12 @@ def detect_anomalies(isolation_forest, data):
 
 # Data Input Section
 st.header("Informasi Pasien dan Input Gambar")
-
-# Satu formulir yang mencakup semua elemen
+    
 with st.form(key="patient_form"):
-    # Bagian Identitas Pasien
+    # --- Identitas Pasien ---
     st.markdown('<h3 class="centered-subheader">Identitas Pasien</h3>', unsafe_allow_html=True)
     gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan", "Tidak Diketahui"])
     age = st.number_input("Usia (dalam tahun)", min_value=0, max_value=100, step=1)
-    st.info("""
-    Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
-    - **Punggung**: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
-    - **Ekstrimitas Bawah**: Termasuk kaki dan paha, rentan jika sering terpapar matahari tanpa perlindungan.
-    - **Torso**: Bagian tengah tubuh, termasuk perut dan sisi, bisa terkena kanker akibat paparan UV.
-    - **Ekstrimitas Atas**: Termasuk lengan dan bahu, sering terkena sinar matahari langsung.
-    - **Perut**: Area yang kurang terpapar tapi bisa terkena jika tidak dilindungi.
-    - **Wajah**: Salah satu area paling rentan karena sering terpapar sinar matahari.
-    - **Dada**: Rentan terutama pada pria karena paparan sinar matahari tanpa perlindungan.
-    - **Kaki**: Termasuk telapak kaki, bisa terkena jika sering berjalan tanpa alas kaki di luar.
-    - **Tidak Diketahui**: Pilih jika lokasi tidak dapat ditentukan dengan pasti.
-    - **Leher**: Area yang sering terpapar sinar matahari, meningkatkan risiko kanker.
-    - **Kulit Kepala**: Rentan terutama pada orang botak karena paparan langsung sinar matahari.
-    - **Tangan**: Termasuk jari, sering terkena paparan lingkungan dan sinar matahari.
-    - **Telinga**: Area kecil tapi sangat rentan terhadap kanker kulit akibat sinar UV.
-    - **Alat Kelamin**: Jarang, tetapi perlu diperiksa jika ada perubahan kulit.
-    - **Ujung Jari Kaki dan Tangan**: Area akral, bisa terkena jika ada trauma atau paparan kimia.
-    """)
     location = st.selectbox(
         "Lokasi Kanker Kulit",
         ["Punggung", "Ekstrimitas Bawah", "Torso", "Ekstrimitas Atas", "Perut", "Wajah", 
@@ -241,9 +220,30 @@ with st.form(key="patient_form"):
          "Alat Kelamin", "Ujung Jari Kaki dan Tangan"]
     )
 
-    # Bagian Input Gambar
-    st.markdown('<h3 class="centered-subheader">Input Gambar</h3>', unsafe_allow_html=True)
-    image_input_method = st.radio("Pilih Metode Input Gambar:", ["Unggah Gambar", "Ambil Foto"])
+    st.info("""
+    Berikut adalah penjelasan singkat untuk setiap lokasi kanker kulit:
+    - *Punggung*: Area punggung sering terpapar sinar matahari, meningkatkan risiko kanker kulit.
+    - *Ekstrimitas Bawah*: Termasuk kaki dan paha, rentan jika sering terpapar matahari tanpa perlindungan.
+    - *Torso*: Bagian tengah tubuh, termasuk perut dan sisi, bisa terkena kanker akibat paparan UV.
+    - *Ekstrimitas Atas*: Termasuk lengan dan bahu, sering terkena sinar matahari langsung.
+    - *Perut*: Area yang kurang terpapar tapi bisa terkena jika tidak dilindungi.
+    - *Wajah*: Salah satu area paling rentan karena sering terpapar sinar matahari.
+    - *Dada*: Rentan terutama pada pria karena paparan sinar matahari tanpa perlindungan.
+    - *Kaki*: Termasuk telapak kaki, bisa terkena jika sering berjalan tanpa alas kaki di luar.
+    - *Tidak Diketahui*: Pilih jika lokasi tidak dapat ditentukan dengan pasti.
+    - *Leher*: Area yang sering terpapar sinar matahari, meningkatkan risiko kanker.
+    - *Kulit Kepala*: Rentan terutama pada orang botak karena paparan langsung sinar matahari.
+    - *Tangan*: Termasuk jari, sering terkena paparan lingkungan dan sinar matahari.
+    - *Telinga*: Area kecil tapi sangat rentan terhadap kanker kulit akibat sinar UV.
+    - *Alat Kelamin*: Jarang, tetapi perlu diperiksa jika ada perubahan kulit.
+    - *Ujung Jari Kaki dan Tangan*: Area akral, bisa terkena jika ada trauma atau paparan kimia.
+    """)
+
+    # Pemilihan metode input gambar
+    image_input_method = st.radio(
+        "Pilih Metode Input Gambar",
+        ("Unggah Gambar", "Ambil Foto")
+    )
 
     selected_image = None
     if image_input_method == "Unggah Gambar":
@@ -251,19 +251,23 @@ with st.form(key="patient_form"):
         if uploaded_file is not None:
             selected_image = Image.open(uploaded_file)
             st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
-    else:  # Capture from Camera
-        picture = st.camera_input("Ambil Foto")
+
+    elif image_input_method == "Ambil Foto":
+        st.info("Pastikan Anda mengizinkan akses kamera di browser Anda. Jika kamera tidak muncul, periksa izin kamera atau coba gunakan perangkat lain.")
+        picture = st.camera_input(
+            "Ambil Foto",
+            help="Klik tombol untuk mengambil foto. Pastikan kamera perangkat Anda aktif dan browser memiliki izin untuk mengakses kamera."
+        )
         if picture is not None:
             selected_image = Image.open(picture)
             st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+        else:
+            st.warning("Foto belum diambil. Silakan ambil foto menggunakan kamera atau pilih metode 'Unggah Gambar'.")
 
-    # Pemisah visual
-    st.markdown("---")
-
-    # Tombol Kirim
+    # --- Tombol Submit: HARUS di dalam form ---
     st.markdown('<h3 class="centered-subheader">Kirim Data</h3>', unsafe_allow_html=True)
     st.markdown('<div class="full-width-button">', unsafe_allow_html=True)
-    submit_button = st.form_submit_button(label="Kirim")
+    submit_button = st.form_submit_button(label="Selanjutnya")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Form submission handling
@@ -278,7 +282,7 @@ if submit_button:
         st.warning("Tolong unggah gambar dengan salah satu dari kedua metode tersebut.")
 
     # Proceed with prediction if all models and image are available
-    if model is not None and base_model is not None and isolation_forest is not None:
+    if model is not None and base_model is not None and isolation_forest is not None and selected_image is not None:
         try:
             # Encode categorical variables using manual mapping
             encoded_gender = gender_mapping[gender]
@@ -298,7 +302,7 @@ if submit_button:
             
             if anomalies[0]:  # Data is an anomaly
                 st.markdown("""
-                **Saran Tindakan:**  
+                *Saran Tindakan:*  
                 Gambar yang Anda unggah mungkin bukan gambar kanker kulit. Pastikan gambar yang diunggah adalah gambar kulit yang jelas dan sesuai. Jika Anda memiliki kekhawatiran tentang kulit Anda, konsultasikan dengan dokter kulit untuk pemeriksaan langsung.
                 """)
             else:  # Data is not an anomaly, proceed to XGBoost
@@ -310,10 +314,13 @@ if submit_button:
                 result_code = class_mapping[int(prediction)]  # Dapatkan kode (misalnya, "mel")
                 result_name = full_name_mapping[result_code]  # Dapatkan nama lengkap (misalnya, "Melanoma")
                 st.subheader("Hasil Prediksi")
-                st.write(f"Prediksi Tipe Kanker Kulit: **{result_name}**")
+                st.write(f"Prediksi Tipe Kanker Kulit: *{result_name}*")
                 # Tampilkan saran tindakan
                 st.markdown(advice_mapping[result_code])
         except Exception as e:
             st.error(f"Error: {str(e)}")
     else:
-        st.error("Cannot make prediction due to missing model(s) or image.")
+        if selected_image is None:
+            st.error("Gambar diperlukan untuk membuat prediksi. Silakan unggah atau ambil foto.")
+        else:
+            st.error("Tidak dapat membuat prediksi karena model tidak tersedia atau gambar tidak valid.")
