@@ -250,7 +250,7 @@ with st.form(key="patient_form"):
         uploaded_file = st.file_uploader("Pilih Gambar...", type=["jpg", "jpeg", "png"])
         if uploaded_file is not None:
             selected_image = Image.open(uploaded_file)
-            st.image(selected_image, caption="Gambar yang Diunggah", use_column_width=True)
+            st.image(selected_image, caption="Gambar yang Diunggah", use_container_width=True)
 
     elif image_input_method == "Ambil Foto":
         st.info("Pastikan Anda mengizinkan akses kamera di browser Anda. Jika kamera tidak muncul, periksa izin kamera atau coba gunakan perangkat lain.")
@@ -260,7 +260,7 @@ with st.form(key="patient_form"):
         )
         if picture is not None:
             selected_image = Image.open(picture)
-            st.image(selected_image, caption="Foto yang Diambil", use_column_width=True)
+            st.image(selected_image, caption="Foto yang Diambil", use_container_width=True)
         else:
             st.warning("Foto belum diambil. Silakan ambil foto menggunakan kamera atau pilih metode 'Unggah Gambar'.")
 
